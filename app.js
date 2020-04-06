@@ -1,14 +1,14 @@
 const express = require('express')
 const cors = require('cors')
 // 自定內容
-const baseData = require('./modules/mssql/baseData')
+const callCustomerList = require('./modules/mssql/callCustomerList')
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
 // 自定內容
-app.use('/baseData', baseData)
+app.use('/callCustomerList', callCustomerList)
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address
