@@ -1,14 +1,41 @@
 const express = require('express')
 const cors = require('cors')
-// 自定內容
-const callCustomerList = require('./modules/mssql/callCustomerList')
+
+// jwt
+const jwt = require('jsonwebtoken')
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
+// 驗證token
+app.use(function (req, res, next) {
+  var token = req.headers['authorization']
+  if (token) {
+    jwt.verify(token, 'seeLove_83799375', function (err, decoded) {
+      if (err) {
+        res.status(401)
+        return res.json({success: false, message: 'Failed to authenticate token.'})
+      } else {
+        req.decoded = decoded
+        next()
+      }
+    })
+  } else {
+    if (req.originalUrl.indexOf('/login')>=0) {
+      next()
+    } else {
+      res.status(401)
+      return res.json({success: false, message: 'No authenticate token.'})
+    }
+  }
+})
+
 // 自定內容
-app.use('/callCustomerList', callCustomerList)
+app.use('/login', require('./modules/mssql/login'))
+app.use('/settings', require('./modules/mssql/settings'))
+app.use('/basic', require('./modules/mssql/basic'))
+app.use('/orders', require('./modules/mssql/orders'))
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address
