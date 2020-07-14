@@ -4,9 +4,15 @@ const cors = require('cors')
 // jwt
 const jwt = require('jsonwebtoken')
 
+// CORS
+let corsOptions = {
+  origin: 'http://192.168.1.20:3001',
+  methods: ['GET', 'POST']
+}
+
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 // 驗證token
 app.use(function (req, res, next) {
@@ -36,6 +42,7 @@ app.use('/login', require('./modules/mssql/login'))
 app.use('/settings', require('./modules/mssql/settings'))
 app.use('/basic', require('./modules/mssql/basic'))
 app.use('/orders', require('./modules/mssql/orders'))
+app.use('/reports', require('./modules/mssql/reports'))
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address

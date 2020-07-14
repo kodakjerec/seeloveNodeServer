@@ -88,8 +88,7 @@ router.post('/userNew', async (req, res) => {
       .execute('settings_UserNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({
@@ -113,8 +112,7 @@ router.post('/userEdit', async (req, res) => {
       .execute('settings_UserEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({
@@ -136,8 +134,7 @@ router.post('/groupProgListNew', async (req, res) => {
       .execute('settings_GroupProgListNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({
@@ -157,8 +154,7 @@ router.post('/groupProgListDel', async (req, res) => {
       .execute('settings_GroupProgListDel')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({
@@ -178,8 +174,7 @@ router.post('/groupNew', async (req, res) => {
       .execute('settings_GroupNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({
@@ -199,8 +194,7 @@ router.post('/groupEdit', async (req, res) => {
       .execute('settings_GroupEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({

@@ -38,8 +38,7 @@ router.post('/companyNew', async (req, res) => {
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -71,8 +70,7 @@ router.post('/companyEdit', async (req, res) => {
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -130,8 +128,7 @@ router.post('/customerNew', async (req, res) => {
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -173,8 +170,7 @@ router.post('/customerEdit', async (req, res) => {
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -225,8 +221,7 @@ router.post('/employeeNew', async (req, res) => {
       .execute('basic_EmployeeNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -261,8 +256,7 @@ router.post('/employeeEdit', async (req, res) => {
       .execute('basic_EmployeeEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -305,8 +299,7 @@ router.post('/productNew', async (req, res) => {
       .execute('basic_ProductNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -333,8 +326,7 @@ router.post('/productEdit', async (req, res) => {
       .execute('basic_ProductEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -357,8 +349,7 @@ router.post('/productBOMNew', async (req, res) => {
       .execute('basic_ProductBOMNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -381,8 +372,7 @@ router.post('/productBOMEdit', async (req, res) => {
       .execute('basic_ProductBOMEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -405,8 +395,7 @@ router.post('/productBOMDelete', async (req, res) => {
       .execute('basic_ProductBOMDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -446,8 +435,7 @@ router.post('/projectNew', async (req, res) => {
       .execute('basic_ProjectNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -471,8 +459,7 @@ router.post('/projectEdit', async (req, res) => {
       .execute('basic_ProjectEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -496,8 +483,7 @@ router.post('/projectDetailNew', async (req, res) => {
       .execute('basic_ProjectDetailNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -521,8 +507,7 @@ router.post('/projectDetailEdit', async (req, res) => {
       .execute('basic_ProjectDetailEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -546,8 +531,7 @@ router.post('/projectDetailDelete', async (req, res) => {
       .execute('basic_ProjectDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -570,8 +554,7 @@ router.post('/projectPBonusNew', async (req, res) => {
       .execute('basic_ProjectPBonusNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
            
     res.json({ 
@@ -594,8 +577,7 @@ router.post('/projectPBonusEdit', async (req, res) => {
       .execute('basic_ProjectPBonusEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -618,8 +600,7 @@ router.post('/projectPBonusDelete', async (req, res) => {
       .execute('basic_ProjectPBonusDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -642,8 +623,7 @@ router.post('/projectSuperBonusNew', async (req, res) => {
       .execute('basic_ProjectSuperBonusNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
           
     res.json({ 
@@ -666,8 +646,7 @@ router.post('/projectSuperBonusEdit', async (req, res) => {
       .execute('basic_ProjectSuperBonusEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
@@ -690,8 +669,7 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
       .execute('basic_ProjectSuperBonusDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        res.status(queryResult.recordset[0].code)
-        res.send(queryResult.recordset[0].message)
+        throw Error(queryResult.recordset[0].message)
       }
       
     res.json({ 
