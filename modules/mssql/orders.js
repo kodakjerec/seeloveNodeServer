@@ -25,10 +25,9 @@ router.post('/orderNew', async (req, res) => {
       .input('OrderDate', sql.Date, form.OrderDate)
       .input('ProjectID', sql.VarChar, form.ProjectID)
       .input('Status', sql.VarChar, form.Status)
-      .input('AssistantID', sql.VarChar, form.AssistantID)
       .input('CreateID', sql.VarChar, form.CreateID)
-      .input('Certificate1', sql.VarChar, form.Certificate1)
-      .input('Certificate2', sql.VarChar, form.Certificate2)
+      .input('Price', sql.Decimal, form.Price)
+      .input('Qty', sql.SmallInt, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
       .execute('orders_OrderNew')
 
@@ -53,12 +52,32 @@ router.post('/orderEdit', async (req, res) => {
       .input('OrderDate', sql.Date, form.OrderDate)
       .input('ProjectID', sql.VarChar, form.ProjectID)
       .input('Status', sql.VarChar, form.Status)
-      .input('AssistantID', sql.VarChar, form.AssistantID)
       .input('CreateID', sql.VarChar, form.CreateID)
-      .input('Certificate1', sql.VarChar, form.Certificate1)
-      .input('Certificate2', sql.VarChar, form.Certificate2)
+      .input('Price', sql.Decimal, form.Price)
+      .input('Qty', sql.SmallInt, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
       .execute('orders_OrderEdit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('Status', sql.VarChar, form.Status)
+      .execute('orders_OrderDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
         throw Error(queryResult.recordset[0].message)
@@ -92,7 +111,9 @@ router.post('/orderCustomerNew', async (req, res) => {
       .input('AgentCity', sql.VarChar, form.AgentCity)
       .input('AgentPost', sql.VarChar, form.AgentPost)
       .input('AgentAddress', sql.NVarChar, form.AgentAddress)
-      .input('BusinessID', sql.NVarChar, form.BusinessID)
+      .input('refKind', sql.NVarChar, form.refKind)
+      .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .execute('orders_OrderCustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -127,7 +148,9 @@ router.post('/orderCustomerEdit', async (req, res) => {
       .input('AgentCity', sql.VarChar, form.AgentCity)
       .input('AgentPost', sql.VarChar, form.AgentPost)
       .input('AgentAddress', sql.NVarChar, form.AgentAddress)
-      .input('BusinessID', sql.NVarChar, form.BusinessID)
+      .input('refKind', sql.NVarChar, form.refKind)
+      .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .execute('orders_OrderCustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -153,7 +176,126 @@ router.post('/orderDetailNew', async (req, res) => {
       .input('ProductID', sql.VarChar, form.ProductID)
       .input('Name', sql.NVarChar, form.Name)
       .input('Qty', sql.SmallInt, form.Qty)
+      .input('ItemType', sql.TinyInt, form.ItemType)
       .execute('orders_OrderDetailNew')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderDetailEdit', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)     
+      .input('ProjectID', sql.VarChar, form.ProjectID)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Name', sql.NVarChar, form.Name)
+      .input('Qty', sql.SmallInt, form.Qty)
+      .input('ItemType', sql.TinyInt, form.ItemType)
+      .execute('orders_OrderDetailEdit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate1New', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate1', sql.VarChar, form.Certificate1)
+      .input('PrintCount', sql.TinyInt, form.PrintCount)
+      .input('Status', sql.VarChar, form.Status)
+      .execute('orders_OrderCertificate1New')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate2New', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate2', sql.VarChar, form.Certificate2)
+      .input('PrintCount', sql.TinyInt, form.PrintCount)
+      .input('Status', sql.VarChar, form.Status)
+      .execute('orders_OrderCertificate2New')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate1Edit', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate1', sql.VarChar, form.Certificate1)
+      .input('PrintCount', sql.TinyInt, form.PrintCount)
+      .input('Status', sql.VarChar, form.Status)
+      .execute('orders_OrderCertificate1Edit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate2Edit', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate2', sql.VarChar, form.Certificate2)
+      .input('PrintCount', sql.TinyInt, form.PrintCount)
+      .input('Status', sql.VarChar, form.Status)
+      .execute('orders_OrderCertificate2Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
         throw Error(queryResult.recordset[0].message)
@@ -172,9 +314,9 @@ router.post('/collectionRecordsNew', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('InvoiceID', sql.VarChar, form.InvoiceID)
-      .input('InvoiceDate', sql.Date, form.InvoiceDate)
       .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('InvoiceID', sql.VarChar, form.InvoiceID)
       .input('PaymentMethod', sql.VarChar, form.PaymentMethod)
       .input('ReceivedDate', sql.Date, form.ReceivedDate)
       .input('Amount', sql.Decimal, form.Amount)
@@ -203,9 +345,9 @@ router.post('/collectionRecordsEdit', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('InvoiceID', sql.VarChar, form.InvoiceID)
-      .input('InvoiceDate', sql.Date, form.InvoiceDate)
       .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('InvoiceID', sql.VarChar, form.InvoiceID)
       .input('PaymentMethod', sql.VarChar, form.PaymentMethod)
       .input('ReceivedDate', sql.Date, form.ReceivedDate)
       .input('Amount', sql.Decimal, form.Amount)
@@ -229,6 +371,46 @@ router.post('/collectionRecordsEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/collectionRecordsDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .execute('orders_CollectionRecordsDelete')
+
+    if (queryResult.recordset[0].code !== 200 ){
+      res.status(queryResult.recordset[0].code)
+      res.send(queryResult.recordset[0].message)
+    }
+
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/collectionRecordsFunctions', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('type', sql.NVarChar, req.body.type)
+      .input('OrderID', sql.NVarChar, req.body.OrderID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('orders_CollectionRecordsFunctions')
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 router.post('/invoiceShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -315,19 +497,16 @@ router.post('/invoiceHeadEdit', async (req, res) => {
     res.send(err.message)
   }
 })
-
-router.post('/invoiceDetailCalculate', async (req, res) => {
+router.post('/invoiceHeadInvalid', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('OrderID', sql.VarChar, form.OrderID)
-      .input('Amount', sql.Decimal, form.Amount)
-      .execute('orders_InvoiceDetailCalculate')
+      .input('InvoiceID', sql.VarChar, form.InvoiceID)
+      .execute('orders_InvoiceHeadInvalid')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -338,6 +517,26 @@ router.post('/invoiceDetailCalculate', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/invoiceFunctions', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('type', sql.NVarChar, req.body.type)
+      .input('OrderID', sql.NVarChar, req.body.OrderID)
+      .input('InvoiceID', sql.NVarChar, req.body.InvoiceID)
+      .input('Seq', sql.NVarChar, req.body.Seq)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('orders_InvoiceFunctions')
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 router.post('/invoiceDetailNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -423,6 +622,7 @@ router.post('/getObject', async (req, res) => {
     const queryResult = await pool.request()
       .input('type', sql.NVarChar, req.body.type)
       .input('ID', sql.NVarChar, req.body.ID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_GetObject')
       
     res.json({

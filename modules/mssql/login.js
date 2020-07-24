@@ -47,6 +47,7 @@ router.post('/getMenu', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('UserID', sql.NVarChar, UserID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('login_GetMenu')
 
     let result = []

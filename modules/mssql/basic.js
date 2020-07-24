@@ -35,6 +35,8 @@ router.post('/companyNew', async (req, res) => {
       .input('City', sql.VarChar, form.City)
       .input('Post', sql.VarChar, form.Post)
       .input('Address', sql.NVarChar, form.Address)
+      .input('refKind', sql.VarChar, form.refKind)
+      .input('Referrer', sql.NVarChar, form.Referrer)
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -67,6 +69,8 @@ router.post('/companyEdit', async (req, res) => {
       .input('City', sql.VarChar, form.City)
       .input('Post', sql.VarChar, form.Post)
       .input('Address', sql.NVarChar, form.Address)
+      .input('refKind', sql.VarChar, form.refKind)
+      .input('Referrer', sql.NVarChar, form.Referrer)
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -124,7 +128,6 @@ router.post('/customerNew', async (req, res) => {
       .input('Status', sql.VarChar, form.Status)
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
-      .input('BusinessID', sql.NVarChar, form.BusinessID)
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -166,7 +169,6 @@ router.post('/customerEdit', async (req, res) => {
       .input('Status', sql.VarChar, form.Status)
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
-      .input('BusinessID', sql.NVarChar, form.BusinessID)
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -703,6 +705,7 @@ router.post('/getObject', async (req, res) => {
     const queryResult = await pool.request()
       .input('type', sql.NVarChar, req.body.type)
       .input('ID', sql.NVarChar, req.body.ID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetObject')
       
     res.json({
