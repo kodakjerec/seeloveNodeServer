@@ -309,6 +309,48 @@ router.post('/orderCertificate2Edit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/orderCertificate1Delete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate1', sql.VarChar, form.Certificate1)
+      .execute('orders_OrderCertificate1Delete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate2Delete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate2', sql.VarChar, form.Certificate2)
+      .execute('orders_OrderCertificate2Delete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/collectionRecordsNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -328,8 +370,7 @@ router.post('/collectionRecordsNew', async (req, res) => {
       .execute('orders_CollectionRecordsNew')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -359,8 +400,7 @@ router.post('/collectionRecordsEdit', async (req, res) => {
       .execute('orders_CollectionRecordsEdit')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -381,8 +421,7 @@ router.post('/collectionRecordsDelete', async (req, res) => {
       .execute('orders_CollectionRecordsDelete')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -450,8 +489,7 @@ router.post('/invoiceHeadNew', async (req, res) => {
       .execute('orders_InvoiceHeadNew')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -556,8 +594,7 @@ router.post('/invoiceDetailNew', async (req, res) => {
       .execute('orders_InvoiceDetailNew')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
@@ -587,8 +624,7 @@ router.post('/invoiceDetailEdit', async (req, res) => {
       .execute('orders_InvoiceDetailEdit')
 
     if (queryResult.recordset[0].code !== 200 ){
-      res.status(queryResult.recordset[0].code)
-      res.send(queryResult.recordset[0].message)
+      throw Error(queryResult.recordset[0].message)
     }
 
     res.json({ 
