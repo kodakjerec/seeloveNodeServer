@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { sql, poolPromise } = require('./modules/config')
 
-router.post('/reports_employees', async (req, res) => {
+router.post('/employees', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()

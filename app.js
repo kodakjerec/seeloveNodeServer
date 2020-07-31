@@ -1,5 +1,7 @@
 const express = require('express')
 const cors = require('cors')
+const { sql, poolPromise } = require('./modules/mssql/modules/config')
+const { decrypt } =require('./modules/mssql/modules/crypto')
 
 // jwt
 const jwt = require('jsonwebtoken')
@@ -16,7 +18,7 @@ app.use(cors(corsOptions))
 
 // 驗證token
 app.use(function (req, res, next) {
-  var token = req.headers['authorization']
+  let token = req.headers['authorization']
   if (token) {
     jwt.verify(token, 'seeLove_83799375', function (err, decoded) {
       if (err) {
@@ -35,6 +37,38 @@ app.use(function (req, res, next) {
       return res.json({success: false, message: 'No authenticate token.'})
     }
   }
+})
+
+// 操作紀錄
+app.use(async function (req, res, next) {
+  let form = {
+    UserID: '',
+    IP: ( req.headers["x-forwarded-for"] || "").split(",").pop() ||
+          req.connection.remoteAddress ||
+          req.socket.remoteAddress ||
+          req.connection.socket.remoteAddress,
+    Device: req.headers['user-agent'],
+    Token: '',
+    CMD: req.originalUrl,
+    Data: JSON.stringify(req.body)
+  }
+  if (req.decoded){
+    form.UserID = req.decoded.UserID
+    form.Token = req.headers['authorization']
+  } else {
+    form.UserID = decrypt(req.body.UserID)
+  }
+  const pool = await poolPromise
+  pool.request()
+    .input('UserID', sql.NVarChar, form.UserID)
+    .input('IP', sql.NVarChar, form.IP)
+    .input('Device', sql.NVarChar, form.Device)
+    .input('Token', sql.NVarChar, form.Token)
+    .input('CMD', sql.NVarChar, form.CMD)
+    .input('Data', sql.NVarChar, form.Data)
+    .execute('common_CmdLog')
+
+  next()
 })
 
 // 自定內容

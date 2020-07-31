@@ -40,9 +40,18 @@ router.post('/login', async (req, res) => {
   }
 })
 
+router.post('/logout', async (req, res) => {
+    let UserID = decrypt(req.body.UserID)
+    const pool = await poolPromise
+    pool.request()
+      .input('UserID', sql.NVarChar, UserID)
+      .execute('login_Logout')
+    
+    res.json({})
+})
+
 router.post('/getMenu', async (req, res) => {
   try {
-    let token = ''
     let UserID = decrypt(req.body.UserID)
     const pool = await poolPromise
     const queryResult = await pool.request()
@@ -64,7 +73,7 @@ router.post('/getMenu', async (req, res) => {
       })
     })
 
-      res.json(result)
+    res.json(result)
   } catch (err) {
     res.status(500)
     res.send(err.message)

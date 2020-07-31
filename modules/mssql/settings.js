@@ -130,7 +130,7 @@ router.post('/userUpdatePassword', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('UserID', sql.NVarChar, decrypt(form.UserID))
-      .input('Password', sql.NVarChar, decrypt(form.Password))
+      .input('Password', sql.NVarChar, form.Password)
       .execute('settings_UserUpdatePassword')
 
       if (queryResult.recordset[0].code !== 200 ){
