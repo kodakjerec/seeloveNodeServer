@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const { sql, poolPromise } = require('./modules/mssql/modules/config')
 const { decrypt } =require('./modules/mssql/modules/crypto')
+const requestIp = require('request-ip')
 
 // jwt
 const jwt = require('jsonwebtoken')
@@ -43,25 +44,25 @@ app.use(function (req, res, next) {
 app.use(async function (req, res, next) {
   let form = {
     UserID: '',
-    IP: ( req.headers["x-forwarded-for"] || "").split(",").pop() ||
-          req.connection.remoteAddress ||
-          req.socket.remoteAddress ||
-          req.connection.socket.remoteAddress,
+    IP: requestIp.getClientIp(req),
     Device: req.headers['user-agent'],
     Token: '',
     CMD: req.originalUrl,
     Data: JSON.stringify(req.body)
   }
+
   if (req.decoded){
     form.UserID = req.decoded.UserID
     form.Token = req.headers['authorization']
   } else {
-    form.UserID = decrypt(req.body.UserID)
+    if(req.body.UserID){
+      form.UserID = decrypt(req.body.UserID)
+    }
   }
   const pool = await poolPromise
   pool.request()
     .input('UserID', sql.NVarChar, form.UserID)
-    .input('IP', sql.NVarChar, form.IP)
+    .input('IP', sql.NVarChar, form.IP? form.IP:'')
     .input('Device', sql.NVarChar, form.Device)
     .input('Token', sql.NVarChar, form.Token)
     .input('CMD', sql.NVarChar, form.CMD)

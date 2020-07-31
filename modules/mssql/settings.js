@@ -9,13 +9,13 @@ router.post('/getUserAndGroupAndProg', async (req, res) => {
     const pool = await poolPromise
     const resUsers = await pool.request()
     .input('type', sql.NVarChar, 'users')
-    .execute('settings_GetSetting')
+    .execute('settings_GetDropdownList')
     const resGroups = await pool.request()
     .input('type', sql.NVarChar, 'groups')
-    .execute('settings_GetSetting')
+    .execute('settings_GetDropdownList')
     const resProglist = await pool.request()
     .input('type', sql.NVarChar, 'proglist')
-    .execute('settings_GetSetting')
+    .execute('settings_GetDropdownList')
     
     res.json({ 
       users: resUsers.recordset,
@@ -59,13 +59,13 @@ router.post('/getGroupProg', async (req, res) => {
   }
 })
 
-router.post('/getSetting', async (req, res) => {
+router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('type', sql.NVarChar, req.body.type)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('settings_GetSetting')
+      .execute('settings_GetDropdownList')
 
     res.json({
       result: queryResult.recordset
@@ -84,7 +84,8 @@ router.post('/userNew', async (req, res) => {
       .input('UserID', sql.NVarChar, decrypt(form.UserID))
       .input('Password', form.Password)
       .input('GroupID', sql.NVarChar, form.GroupID)
-      .input('refEmployeeID', form.refEmployeeID)
+      .input('refEmployeeID', sql.NVarChar, form.refEmployeeID)
+      .input('Status', sql.NVarChar, form.Status)
       .execute('settings_UserNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -108,7 +109,8 @@ router.post('/userEdit', async (req, res) => {
       .input('UserID', sql.NVarChar, decrypt(form.UserID))
       .input('Password', sql.NVarChar, form.Password)
       .input('GroupID', sql.NVarChar, form.GroupID)
-      .input('refEmployeeID', form.refEmployeeID)
+      .input('refEmployeeID', sql.NVarChar, form.refEmployeeID)
+      .input('Status', sql.NVarChar, form.Status)
       .execute('settings_UserEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
