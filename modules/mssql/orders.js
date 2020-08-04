@@ -6,6 +6,7 @@ router.post('/ordersShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_OrdersShow')
 
@@ -22,6 +23,7 @@ router.post('/orderNew', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
       .input('OrderDate', sql.Date, form.OrderDate)
       .input('ProjectID', sql.VarChar, form.ProjectID)
       .input('Status', sql.VarChar, form.Status)
@@ -454,6 +456,7 @@ router.post('/invoiceShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_InvoiceShow')
 

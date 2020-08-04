@@ -9,12 +9,15 @@ router.post('/getUserAndGroupAndProg', async (req, res) => {
     const pool = await poolPromise
     const resUsers = await pool.request()
     .input('type', sql.NVarChar, 'users')
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
     .execute('settings_GetDropdownList')
     const resGroups = await pool.request()
     .input('type', sql.NVarChar, 'groups')
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
     .execute('settings_GetDropdownList')
     const resProglist = await pool.request()
     .input('type', sql.NVarChar, 'proglist')
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
     .execute('settings_GetDropdownList')
     
     res.json({ 
@@ -34,6 +37,7 @@ router.post('/getUserProg', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('UserID', sql.NVarChar, UserID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetUserProg')
     res.json({ 
       userProg: queryResult.recordset
@@ -49,6 +53,7 @@ router.post('/getGroupProg', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('GroupID', sql.NVarChar, req.body.GroupID)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetGroupProg')
     res.json({ 
       userProg: queryResult.recordset

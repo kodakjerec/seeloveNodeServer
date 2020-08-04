@@ -6,6 +6,7 @@ router.post('/companiesShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CompaniesShow')
 
@@ -37,6 +38,7 @@ router.post('/companyNew', async (req, res) => {
       .input('Address', sql.NVarChar, form.Address)
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -71,6 +73,7 @@ router.post('/companyEdit', async (req, res) => {
       .input('Address', sql.NVarChar, form.Address)
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -90,6 +93,7 @@ router.post('/customersShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CustomersShow')
 
@@ -188,6 +192,7 @@ router.post('/employeesShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_EmployeesShow')
       
@@ -274,6 +279,7 @@ router.post('/productsShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProductsShow')
       
@@ -413,6 +419,7 @@ router.post('/projectsShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProjectsShow')
 
