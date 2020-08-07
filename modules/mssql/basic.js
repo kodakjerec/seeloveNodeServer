@@ -6,7 +6,7 @@ router.post('/companiesShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CompaniesShow')
 
@@ -93,10 +93,9 @@ router.post('/customersShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CustomersShow')
-
     res.json({ 
       result: queryResult.recordset
     })
@@ -192,7 +191,7 @@ router.post('/employeesShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_EmployeesShow')
       
@@ -279,7 +278,7 @@ router.post('/productsShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProductsShow')
       
@@ -419,7 +418,7 @@ router.post('/projectsShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProjectsShow')
 

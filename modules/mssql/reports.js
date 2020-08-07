@@ -19,6 +19,25 @@ router.post('/employees', async (req, res) => {
   }
 })
 
+router.post('/bonus1', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('StartDate', sql.Date, form.StartDate)
+      .input('EndDate', sql.Date, form.EndDate)
+      .execute('reports_Bonus1')
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise

@@ -6,7 +6,7 @@ router.post('/ordersShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_OrdersShow')
 
@@ -228,6 +228,7 @@ router.post('/orderCertificate1New', async (req, res) => {
       .input('Certificate1', sql.VarChar, form.Certificate1)
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
+      .input('CreateDate', sql.Date, form.CreateDate)
       .execute('orders_OrderCertificate1New')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -251,6 +252,7 @@ router.post('/orderCertificate2New', async (req, res) => {
       .input('Certificate2', sql.VarChar, form.Certificate2)
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
+      .input('CreateDate', sql.Date, form.CreateDate)
       .execute('orders_OrderCertificate2New')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -274,6 +276,7 @@ router.post('/orderCertificate1Edit', async (req, res) => {
       .input('Certificate1', sql.VarChar, form.Certificate1)
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
+      .input('CreateDate', sql.Date, form.CreateDate)
       .execute('orders_OrderCertificate1Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -297,6 +300,7 @@ router.post('/orderCertificate2Edit', async (req, res) => {
       .input('Certificate2', sql.VarChar, form.Certificate2)
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
+      .input('CreateDate', sql.Date, form.CreateDate)
       .execute('orders_OrderCertificate2Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -456,7 +460,7 @@ router.post('/invoiceShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, form.keyword)
+      .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_InvoiceShow')
 
