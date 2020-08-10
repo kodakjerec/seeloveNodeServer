@@ -219,6 +219,38 @@ router.post('/orderDetailEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/certificate1Show', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('orders_Certificate1Show')
+
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/certificate2Show', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('orders_Certificate2Show')
+
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/orderCertificate1New', async (req, res) => {
   try {
     let form = req.body.form
