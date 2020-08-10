@@ -689,6 +689,22 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
   }
 })
 
+router.post('/checkValidate', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('type', sql.NVarChar, req.body.type)
+      .input('ID', sql.VarChar, req.body.ID)
+      .execute('basic_CheckValidate')
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
