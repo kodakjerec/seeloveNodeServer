@@ -78,8 +78,27 @@ router.post('/orderDelete', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('ID', sql.NVarChar, form.ID)
-      .input('Status', sql.VarChar, form.Status)
       .execute('orders_OrderDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderInvalid', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('orders_OrderInvalid')
 
       if (queryResult.recordset[0].code !== 200 ){
         throw Error(queryResult.recordset[0].message)

@@ -73,7 +73,7 @@ router.get('/certificate1ToExcel', async (req, res) => {
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.query.Certificate1)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('orders_Certificate1Show')
+      .execute('reports_Certificate1ToExcel')
     let data = queryResult.recordset
 
     let fileName = 'sample.xlsx'
@@ -113,7 +113,7 @@ router.get('/certificate2ToExcel', async (req, res) => {
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.query.Certificate2)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('orders_Certificate2Show')
+      .execute('reports_Certificate2ToExcel')
     let data = queryResult.recordset
 
     let fileName = 'sample.xlsx'
