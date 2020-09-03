@@ -105,7 +105,6 @@ router.post('/userNew', async (req, res) => {
     res.send(err.message)
   }
 })
-
 router.post('/userEdit', async (req, res) => {
   try {
     let form = req.body.form
@@ -130,7 +129,6 @@ router.post('/userEdit', async (req, res) => {
     res.send(err.message)
   }
 })
-
 router.post('/userUpdatePassword', async (req, res) => {
   try {
     let form = req.body.form
@@ -221,6 +219,82 @@ router.post('/groupEdit', async (req, res) => {
       .input('GroupID', sql.NVarChar, req.body.GroupID)
       .input('Name', sql.NVarChar, req.body.Name)
       .execute('settings_GroupEdit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+router.post('/settingsNew', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('Category', sql.NVarChar, form.Category)
+      .input('ParentID', sql.VarChar, form.ParentID)
+      .input('ID', sql.VarChar, form.ID)
+      .input('Value', sql.NVarChar, form.Value)
+      .input('Language', sql.TinyInt, form.Language)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('ParentCategory', sql.NVarChar, form.ParentCategory)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('settings_SettingsNew')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/settingsEdit', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('Category', sql.NVarChar, form.Category)
+      .input('ParentID', sql.VarChar, form.ParentID)
+      .input('ID', sql.VarChar, form.ID)
+      .input('Value', sql.NVarChar, form.Value)
+      .input('Language', sql.TinyInt, form.Language)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('ParentCategory', sql.NVarChar, form.ParentCategory)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('settings_SettingsEdit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/settingsDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('Category', sql.NVarChar, form.Category)
+      .input('ID', sql.VarChar, form.ID)
+      .execute('settings_SettingsDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
         throw Error(queryResult.recordset[0].message)

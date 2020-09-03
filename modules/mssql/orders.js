@@ -599,6 +599,7 @@ router.post('/invoiceHeadInvalid', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('InvoiceID', sql.VarChar, form.InvoiceID)
+      .input('OrderID', sql.VarChar, form.OrderID)
       .execute('orders_InvoiceHeadInvalid')
 
     if (queryResult.recordset[0].code !== 200 ){

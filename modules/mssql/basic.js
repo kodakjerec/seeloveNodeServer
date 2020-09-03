@@ -39,6 +39,7 @@ router.post('/companyNew', async (req, res) => {
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
+      .input('Nickname', sql.NVarChar, form.Nickname)
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -74,6 +75,7 @@ router.post('/companyEdit', async (req, res) => {
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
+      .input('Nickname', sql.NVarChar, form.Nickname)
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -303,6 +305,10 @@ router.post('/productNew', async (req, res) => {
       .input('Unit', sql.VarChar, form.Unit)
       .input('Price', sql.Decimal, form.Price)
       .input('Cost', sql.Decimal, form.Cost)
+      .input('Category1', sql.VarChar, form.Category1)
+      .input('Category2', sql.VarChar, form.Category2)
+      .input('Category3', sql.VarChar, form.Category3)
+      .input('Status', sql.VarChar, form.Status)
       .execute('basic_ProductNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -330,6 +336,10 @@ router.post('/productEdit', async (req, res) => {
       .input('Unit', sql.VarChar, form.Unit)
       .input('Price', sql.Decimal, form.Price)
       .input('Cost', sql.Decimal, form.Cost)
+      .input('Category1', sql.VarChar, form.Category1)
+      .input('Category2', sql.VarChar, form.Category2)
+      .input('Category3', sql.VarChar, form.Category3)
+      .input('Status', sql.VarChar, form.Status)
       .execute('basic_ProductEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
