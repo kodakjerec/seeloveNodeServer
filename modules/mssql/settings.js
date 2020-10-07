@@ -153,11 +153,21 @@ router.post('/userUpdatePassword', async (req, res) => {
 
 router.post('/groupProgListNew', async (req, res) => {
   try {
-    let ProgID = req.body.ProgID
+    let row = req.body.Row
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('GroupID', sql.NVarChar, req.body.GroupID)
-      .input('ProgID', sql.NVarChar, req.body.ProgID)
+      .input('ProgID', sql.NVarChar, row.ProgID)
+      .input('fun1', sql.Tinyint, row.fun1)
+      .input('fun2', sql.Tinyint, row.fun2)
+      .input('fun3', sql.Tinyint, row.fun3)
+      .input('fun4', sql.Tinyint, row.fun4)
+      .input('fun5', sql.Tinyint, row.fun5)
+      .input('fun6', sql.Tinyint, row.fun6)
+      .input('fun7', sql.Tinyint, row.fun7)
+      .input('fun8', sql.Tinyint, row.fun8)
+      .input('fun9', sql.Tinyint, row.fun9)
+      .input('fun10', sql.Tinyint, row.fun10)
       .execute('settings_GroupProgListNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -174,11 +184,43 @@ router.post('/groupProgListNew', async (req, res) => {
 })
 router.post('/groupProgListDel', async (req, res) => {
   try {
+    let row = req.body.Row
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('GroupID', sql.NVarChar, req.body.GroupID)
-      .input('ProgID', sql.NVarChar, req.body.ProgID)
+      .input('ProgID', sql.NVarChar, row.ProgID)
       .execute('settings_GroupProgListDel')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        throw Error(queryResult.recordset[0].message)
+      }
+      
+    res.json({
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/groupProgListEdit', async (req, res) => {
+  try {
+    let row = req.body.Row
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('GroupID', sql.NVarChar, req.body.GroupID)
+      .input('ProgID', sql.NVarChar, row.ProgID)
+      .input('fun1', sql.Tinyint, row.fun1)
+      .input('fun2', sql.Tinyint, row.fun2)
+      .input('fun3', sql.Tinyint, row.fun3)
+      .input('fun4', sql.Tinyint, row.fun4)
+      .input('fun5', sql.Tinyint, row.fun5)
+      .input('fun6', sql.Tinyint, row.fun6)
+      .input('fun7', sql.Tinyint, row.fun7)
+      .input('fun8', sql.Tinyint, row.fun8)
+      .input('fun9', sql.Tinyint, row.fun9)
+      .input('fun10', sql.Tinyint, row.fun10)
+      .execute('settings_GroupProgListEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
         throw Error(queryResult.recordset[0].message)
