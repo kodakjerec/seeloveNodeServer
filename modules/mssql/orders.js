@@ -280,6 +280,7 @@ router.post('/orderCertificate1New', async (req, res) => {
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
       .input('CreateDate', sql.Date, form.CreateDate)
+      .input('ReportDuration', sq.VarChar, form.ReportDuration)
       .execute('orders_OrderCertificate1New')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -328,6 +329,7 @@ router.post('/orderCertificate1Edit', async (req, res) => {
       .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
       .input('CreateDate', sql.Date, form.CreateDate)
+      .input('ReportDuration', sq.VarChar, form.ReportDuration)
       .execute('orders_OrderCertificate1Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
