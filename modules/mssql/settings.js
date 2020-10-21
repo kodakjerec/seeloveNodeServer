@@ -323,6 +323,22 @@ router.post('/settingsDelete', async (req, res) => {
   }
 })
 
+router.post('/announcementShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('settings_AnnouncementShow')
+
+    res.json({ 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/announcementNew', async (req, res) => {
   try {
     let form = req.body.form
