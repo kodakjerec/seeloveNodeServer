@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const { sql, poolPromise } = require('./modules/config')
+const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 const { decrypt } =require('./modules/crypto')
 
 router.post('/getObject', async (req, res) => {
@@ -13,7 +13,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetObject')
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -29,7 +29,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetDropdownList')
 
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -45,7 +45,7 @@ router.post('/getUserProg', async (req, res) => {
       .input('UserID', sql.NVarChar, UserID)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetUserProg')
-    res.json({ 
+    successResponse(res, { 
       userProg: queryResult.recordset
     })
   } catch (err) {
@@ -66,10 +66,11 @@ router.post('/userNew', async (req, res) => {
       .execute('settings_UserNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -90,10 +91,11 @@ router.post('/userEdit', async (req, res) => {
       .execute('settings_UserEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -111,10 +113,11 @@ router.post('/userUpdatePassword', async (req, res) => {
       .execute('settings_UserUpdatePassword')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -143,10 +146,11 @@ router.post('/groupProgListNew', async (req, res) => {
       .execute('settings_GroupProgListNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -164,10 +168,11 @@ router.post('/groupProgListDel', async (req, res) => {
       .execute('settings_GroupProgListDel')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -195,10 +200,11 @@ router.post('/groupProgListEdit', async (req, res) => {
       .execute('settings_GroupProgListEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -215,10 +221,11 @@ router.post('/groupNew', async (req, res) => {
       .execute('settings_GroupNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -235,10 +242,11 @@ router.post('/groupEdit', async (req, res) => {
       .execute('settings_GroupEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -263,10 +271,11 @@ router.post('/settingsNew', async (req, res) => {
       .execute('settings_SettingsNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -290,10 +299,11 @@ router.post('/settingsEdit', async (req, res) => {
       .execute('settings_SettingsEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -311,10 +321,11 @@ router.post('/settingsDelete', async (req, res) => {
       .execute('settings_SettingsDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -331,7 +342,7 @@ router.post('/announcementShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_AnnouncementShow')
 
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -353,10 +364,11 @@ router.post('/announcementNew', async (req, res) => {
       .execute('settings_AnnouncementNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -378,10 +390,11 @@ router.post('/announcementEdit', async (req, res) => {
     .execute('settings_AnnouncementEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -403,10 +416,11 @@ router.post('/announcementDelete', async (req, res) => {
     .execute('settings_AnnouncementDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {

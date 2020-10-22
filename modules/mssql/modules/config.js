@@ -14,6 +14,16 @@ const poolPromise = new sql.ConnectionPool(config)
   })
   .catch(err => console.log('Database Connection Failed! Bad Config: ', err))
 
+const errorResponse = function (response, error) {
+  response.header('code',error.code)
+  response.send(error.message)
+}
+
+const successResponse = function (response, result) {
+  response.header('code', '200')
+  response.json(result)
+}
+
 module.exports = {
-  sql, poolPromise
+  sql, poolPromise, errorResponse, successResponse
 }

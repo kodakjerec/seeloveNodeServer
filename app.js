@@ -10,7 +10,8 @@ const jwt = require('jsonwebtoken')
 // CORS
 let corsOptions = {
   origin: ['http://192.168.1.20:3001', 'http://192.168.1.104:8080', 'http://localhost:8080' ],
-  methods: ['GET', 'POST']
+  methods: ['GET', 'POST'],
+  exposedHeaders: ['code']
 }
 
 const app = express()

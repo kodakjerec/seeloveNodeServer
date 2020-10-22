@@ -3,7 +3,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 
 const router = express.Router()
-const { sql, poolPromise } = require('./modules/config')
+const { sql, poolPromise, successResponse } = require('./modules/config')
 const { decrypt } =require('./modules/crypto')
 
 // router.get('/', function(req, res) {
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
       res.status(401)
     }
     
-    res.json({ 
+    successResponse(res, { 
       result: result.recordset,
       token: token
     })
@@ -47,7 +47,7 @@ router.post('/logout', async (req, res) => {
       .input('UserID', sql.NVarChar, UserID)
       .execute('login_Logout')
     
-    res.json({})
+    successResponse(res, {})
 })
 
 router.post('/getMenu', async (req, res) => {
@@ -73,7 +73,7 @@ router.post('/getMenu', async (req, res) => {
       })
     })
 
-    res.json(result)
+    successResponse(res, result)
   } catch (err) {
     res.status(500)
     res.send(err.message)

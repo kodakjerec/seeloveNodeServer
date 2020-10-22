@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { sql, poolPromise } = require('./modules/config')
+const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
 router.post('/companiesShow', async (req, res) => {
   try {
@@ -10,7 +10,7 @@ router.post('/companiesShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CompaniesShow')
 
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -43,10 +43,11 @@ router.post('/companyNew', async (req, res) => {
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -79,10 +80,11 @@ router.post('/companyEdit', async (req, res) => {
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -98,7 +100,7 @@ router.post('/customersShow', async (req, res) => {
       .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CustomersShow')
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -136,10 +138,11 @@ router.post('/customerNew', async (req, res) => {
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -177,10 +180,11 @@ router.post('/customerEdit', async (req, res) => {
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -197,7 +201,7 @@ router.post('/employeesShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_EmployeesShow')
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -229,10 +233,11 @@ router.post('/employeeNew', async (req, res) => {
       .execute('basic_EmployeeNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -264,10 +269,11 @@ router.post('/employeeEdit', async (req, res) => {
       .execute('basic_EmployeeEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -284,7 +290,7 @@ router.post('/productsShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProductsShow')
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -312,10 +318,11 @@ router.post('/productNew', async (req, res) => {
       .execute('basic_ProductNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -343,10 +350,11 @@ router.post('/productEdit', async (req, res) => {
       .execute('basic_ProductEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -366,10 +374,11 @@ router.post('/productBOMNew', async (req, res) => {
       .execute('basic_ProductBOMNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -389,10 +398,11 @@ router.post('/productBOMEdit', async (req, res) => {
       .execute('basic_ProductBOMEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -412,10 +422,11 @@ router.post('/productBOMDelete', async (req, res) => {
       .execute('basic_ProductBOMDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -432,7 +443,7 @@ router.post('/projectsShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProjectsShow')
 
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -453,10 +464,11 @@ router.post('/projectNew', async (req, res) => {
       .execute('basic_ProjectNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -477,10 +489,11 @@ router.post('/projectEdit', async (req, res) => {
       .execute('basic_ProjectEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -501,10 +514,11 @@ router.post('/projectDetailNew', async (req, res) => {
       .execute('basic_ProjectDetailNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -525,10 +539,11 @@ router.post('/projectDetailEdit', async (req, res) => {
       .execute('basic_ProjectDetailEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -549,10 +564,11 @@ router.post('/projectDetailDelete', async (req, res) => {
       .execute('basic_ProjectDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -572,10 +588,11 @@ router.post('/projectPBonusNew', async (req, res) => {
       .execute('basic_ProjectPBonusNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
            
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -595,10 +612,11 @@ router.post('/projectPBonusEdit', async (req, res) => {
       .execute('basic_ProjectPBonusEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -618,10 +636,11 @@ router.post('/projectPBonusDelete', async (req, res) => {
       .execute('basic_ProjectPBonusDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -641,10 +660,11 @@ router.post('/projectSuperBonusNew', async (req, res) => {
       .execute('basic_ProjectSuperBonusNew')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
           
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -664,10 +684,11 @@ router.post('/projectSuperBonusEdit', async (req, res) => {
       .execute('basic_ProjectSuperBonusEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -687,10 +708,11 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
       .execute('basic_ProjectSuperBonusDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
-        throw Error(queryResult.recordset[0].message)
+        errorResponse(res, queryResult.recordset[0])
+        return
       }
       
-    res.json({ 
+    successResponse(res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -707,7 +729,7 @@ router.post('/checkValidate', async (req, res) => {
       .input('ID', sql.VarChar, req.body.ID)
       .execute('basic_CheckValidate')
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -723,7 +745,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetDropdownList')
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -740,7 +762,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetObject')
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {

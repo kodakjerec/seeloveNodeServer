@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { sql, poolPromise } = require('./modules/config')
+const { sql, poolPromise, successResponse } = require('./modules/config')
 const Excel = require('exceljs')
 const path = require('path')
 
 router.post('/employeesToExcel', async (req, res) => {
   try {
-    res.json({})
+    successResponse(res, {})
 
   } catch (err) {
     res.status(500)
@@ -15,7 +15,7 @@ router.post('/employeesToExcel', async (req, res) => {
 })
 router.post('/certificate1ToExcel', async (req, res) => {
   try {
-    res.json({})
+    successResponse(res, {})
 
   } catch (err) {
     res.status(500)
@@ -24,7 +24,7 @@ router.post('/certificate1ToExcel', async (req, res) => {
 })
 router.post('/certificate2ToExcel', async (req, res) => {
   try {
-    res.json({})
+    successResponse(res, {})
 
   } catch (err) {
     res.status(500)
@@ -33,7 +33,7 @@ router.post('/certificate2ToExcel', async (req, res) => {
 })
 router.post('/bonus2ToExcel', async (req, res) => {
   try {
-    res.json({})
+    successResponse(res, {})
     
   } catch (err) {
     res.status(500)
@@ -49,7 +49,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('reports_GetDropdownList')
       
-    res.json({
+    successResponse(res, {
       result: queryResult.recordset
     })
   } catch (err) {
