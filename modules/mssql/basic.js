@@ -461,6 +461,7 @@ router.post('/projectNew', async (req, res) => {
       .input('StartDate', sql.Date, form.StartDate)
       .input('EndDate', sql.Date, form.EndDate)
       .input('Price', sql.Decimal, form.Price)
+      .input('PV', sql.Decimal, form.PV)
       .execute('basic_ProjectNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -486,6 +487,7 @@ router.post('/projectEdit', async (req, res) => {
       .input('StartDate', sql.Date, form.StartDate)
       .input('EndDate', sql.Date, form.EndDate)
       .input('Price', sql.Decimal, form.Price)
+      .input('PV', sql.Decimal, form.PV)
       .execute('basic_ProjectEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
