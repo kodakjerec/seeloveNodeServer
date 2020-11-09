@@ -284,10 +284,6 @@ router.post('/orderCertificate1New', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
-      .input('Certificate1', sql.VarChar, form.Certificate1)
-      .input('PrintCount', sql.TinyInt, form.PrintCount)
-      .input('Status', sql.VarChar, form.Status)
-      .input('CreateDate', sql.Date, form.CreateDate)
       .input('ReportDuration', sql.VarChar, form.ReportDuration)
       .input('Prefix', sql.VarChar, form.Prefix)
       .execute('orders_OrderCertificate1New')
@@ -311,10 +307,6 @@ router.post('/orderCertificate2New', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
-      .input('Certificate2', sql.VarChar, form.Certificate2)
-      .input('PrintCount', sql.TinyInt, form.PrintCount)
-      .input('Status', sql.VarChar, form.Status)
-      .input('CreateDate', sql.Date, form.CreateDate)
       .execute('orders_OrderCertificate2New')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -337,11 +329,9 @@ router.post('/orderCertificate1Edit', async (req, res) => {
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Certificate1', sql.VarChar, form.Certificate1)
-      .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
-      .input('CreateDate', sql.Date, form.CreateDate)
       .input('ReportDuration', sql.VarChar, form.ReportDuration)
-      .input('Prefix', sql.VarChar, form.Prefix)
+      .input('IssuanceDate', sql.Date, form.IssuanceDate)
       .execute('orders_OrderCertificate1Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -364,9 +354,8 @@ router.post('/orderCertificate2Edit', async (req, res) => {
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Certificate2', sql.VarChar, form.Certificate2)
-      .input('PrintCount', sql.TinyInt, form.PrintCount)
       .input('Status', sql.VarChar, form.Status)
-      .input('CreateDate', sql.Date, form.CreateDate)
+      .input('IssuanceDate', sql.Date, form.IssuanceDate)
       .execute('orders_OrderCertificate2Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
