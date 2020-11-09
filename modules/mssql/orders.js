@@ -286,6 +286,7 @@ router.post('/orderCertificate1New', async (req, res) => {
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('ReportDuration', sql.VarChar, form.ReportDuration)
       .input('Prefix', sql.VarChar, form.Prefix)
+      .input('IssuanceDate', sql.Date, form.IssuanceDate)
       .execute('orders_OrderCertificate1New')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -307,6 +308,7 @@ router.post('/orderCertificate2New', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
+      .input('IssuanceDate', sql.Date, form.IssuanceDate)
       .execute('orders_OrderCertificate2New')
 
       if (queryResult.recordset[0].code !== 200 ){
