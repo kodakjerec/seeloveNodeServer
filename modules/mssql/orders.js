@@ -7,6 +7,8 @@ router.post('/ordersShow', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('StartDate', sql.Date, req.body.StartDate)
+      .input('EndDate', sql.Date, req.body.EndDate)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_OrdersShow')
 
