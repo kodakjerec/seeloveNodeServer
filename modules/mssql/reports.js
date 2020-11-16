@@ -31,6 +31,15 @@ router.post('/certificate2ToExcel', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/bonus1ToExcel', async (req, res) => {
+  try {
+    successResponse(res, {})
+    
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/bonus2ToExcel', async (req, res) => {
   try {
     successResponse(res, {})
