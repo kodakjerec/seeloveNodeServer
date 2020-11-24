@@ -1,8 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
-const { decrypt } =require('./modules/crypto')
+const { sql, poolPromise, successResponse } = require('./modules/config')
 
 router.post('/assign', async (req, res) => {
   try {
@@ -25,3 +24,5 @@ router.post('/assign', async (req, res) => {
     res.send(err.message)
   }
 })
+
+module.exports = router
