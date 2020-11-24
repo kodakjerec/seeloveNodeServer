@@ -10,6 +10,7 @@ router.post('/ordersShow', async (req, res) => {
       .input('StartDate', sql.Date, req.body.StartDate)
       .input('EndDate', sql.Date, req.body.EndDate)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('ID', sql.VarChar, req.body.ID)
       .execute('orders_OrdersShow')
 
     successResponse(res, { 
@@ -33,6 +34,8 @@ router.post('/orderNew', async (req, res) => {
       .input('Price', sql.Decimal, form.Price)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
+      .input('Prefix', sql.VarChar, form.Prefix)
+      .input('Memo', sql.NVarChar, form.Memo)
       .execute('orders_OrderNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -61,6 +64,7 @@ router.post('/orderEdit', async (req, res) => {
       .input('Price', sql.Decimal, form.Price)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
+      .input('Memo', sql.NVarChar, form.Memo)
       .execute('orders_OrderEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -234,6 +238,28 @@ router.post('/orderDetailEdit', async (req, res) => {
       .input('Qty', sql.SmallInt, form.Qty)
       .input('ItemType', sql.TinyInt, form.ItemType)
       .execute('orders_OrderDetailEdit')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)     
+      .execute('orders_OrderDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
