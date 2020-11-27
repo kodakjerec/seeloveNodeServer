@@ -210,6 +210,7 @@ router.post('/orderDetailNew', async (req, res) => {
       .input('Name', sql.NVarChar, form.Name)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('ItemType', sql.TinyInt, form.ItemType)
+      .input('Price', sql.Decimal, form.Price)
       .execute('orders_OrderDetailNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -237,6 +238,7 @@ router.post('/orderDetailEdit', async (req, res) => {
       .input('Name', sql.NVarChar, form.Name)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('ItemType', sql.TinyInt, form.ItemType)
+      .input('Price', sql.Decimal, form.Price)
       .execute('orders_OrderDetailEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
