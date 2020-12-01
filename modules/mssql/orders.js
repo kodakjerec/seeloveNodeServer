@@ -733,6 +733,29 @@ router.post('/invoiceDetailEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/functionsUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Function', sql.VarChar, form.Function)
+      .input('Value', sql.VarChar, form.Value)     
+      .execute('orders_FunctionsUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 router.post('/getDropdownList', async (req, res) => {
   try {

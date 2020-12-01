@@ -371,6 +371,7 @@ router.post('/productBOMNew', async (req, res) => {
       .input('Seq', sql.NVarChar, form.Seq)
       .input('SubID', sql.NVarChar, form.SubID)
       .input('Qty', sql.SmallInt, form.Qty)
+      .input('Price', sql.Decimal, form.Price)
       .execute('basic_ProductBOMNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -395,6 +396,7 @@ router.post('/productBOMEdit', async (req, res) => {
       .input('Seq', sql.NVarChar, form.Seq)
       .input('SubID', sql.NVarChar, form.SubID)
       .input('Qty', sql.SmallInt, form.Qty)
+      .input('Price', sql.Decimal, form.Price)
       .execute('basic_ProductBOMEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -708,6 +710,52 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
     .input('Price', sql.Decimal, form.Price)
     .input('Percentage', sql.Decimal(10,2), form.Percentage)
       .execute('basic_ProjectSuperBonusDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/projectFunctionsUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ProjectID', sql.NVarChar, form.ProjectID)
+      .input('Function', sql.VarChar, form.Function)
+      .input('Available', sql.TinyInt, form.Available)
+      .execute('basic_ProjectFunctionsUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/productFunctionsUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ProductID', sql.NVarChar, form.ProductID)
+      .input('Function', sql.VarChar, form.Function)
+      .input('Available', sql.TinyInt, form.Available)
+      .execute('basic_ProductFunctionsUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
