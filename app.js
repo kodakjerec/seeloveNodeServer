@@ -80,6 +80,7 @@ app.use('/basic', require('./modules/mssql/basic'))
 app.use('/orders', require('./modules/mssql/orders'))
 app.use('/reports', require('./modules/mssql/reports'))
 app.use('/signOff', require('./modules/mssql/signOff'))
+app.use('/stock', require('./modules/mssql/stock'))
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
+// Company
 router.post('/companiesShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -92,7 +93,29 @@ router.post('/companyEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/companyDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('basic_CompanyDelete')
 
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Customer
 router.post('/customersShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -192,7 +215,29 @@ router.post('/customerEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/customerDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('basic_CustomerDelete')
 
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Employee
 router.post('/employeesShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -281,7 +326,29 @@ router.post('/employeeEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/employeeDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('basic_EmployeeDelete')
 
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Product
 router.post('/productsShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -315,6 +382,7 @@ router.post('/productNew', async (req, res) => {
       .input('Category2', sql.VarChar, form.Category2)
       .input('Category3', sql.VarChar, form.Category3)
       .input('Status', sql.VarChar, form.Status)
+      .input('Inventory', sql.TinyInt, form.Inventory)
       .execute('basic_ProductNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -347,6 +415,7 @@ router.post('/productEdit', async (req, res) => {
       .input('Category2', sql.VarChar, form.Category2)
       .input('Category3', sql.VarChar, form.Category3)
       .input('Status', sql.VarChar, form.Status)
+      .input('Inventory', sql.TinyInt, form.Inventory)
       .execute('basic_ProductEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -362,6 +431,29 @@ router.post('/productEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/productDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('basic_ProductDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Product BOM
 router.post('/productBOMNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -437,6 +529,7 @@ router.post('/productBOMDelete', async (req, res) => {
   }
 })
 
+// Project
 router.post('/projectsShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -464,6 +557,7 @@ router.post('/projectNew', async (req, res) => {
       .input('EndDate', sql.Date, form.EndDate)
       .input('Price', sql.Decimal, form.Price)
       .input('PV', sql.Decimal, form.PV)
+      .input('Prefix', sql.VarChar, form.Prefix)
       .execute('basic_ProjectNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -505,6 +599,29 @@ router.post('/projectEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/projectDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('basic_ProjectDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Project Detail
 router.post('/projectDetailNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -580,6 +697,8 @@ router.post('/projectDetailDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Project Performance Bonus
 router.post('/projectPBonusNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -652,6 +771,8 @@ router.post('/projectPBonusDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Project Super Bonus
 router.post('/projectSuperBonusNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -724,6 +845,8 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Project Functions
 router.post('/projectFunctionsUpdate', async (req, res) => {
   try {
     let form = req.body.form
@@ -747,6 +870,8 @@ router.post('/projectFunctionsUpdate', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Product Functions
 router.post('/productFunctionsUpdate', async (req, res) => {
   try {
     let form = req.body.form
@@ -762,6 +887,106 @@ router.post('/productFunctionsUpdate', async (req, res) => {
         return
       }
       
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// StorageAddress
+router.post('/storageAddressUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.VarChar, form.ID)
+      .input('Building', sql.VarChar, form.Building)
+      .input('Floor', sql.VarChar, form.Floor)
+      .input('Area', sql.VarChar, form.Area)
+      .input('Direction', sql.VarChar, form.Direction)
+      .input('Category1', sql.VarChar, form.Category1)
+      .input('Category2', sql.VarChar, form.Category2)
+      .input('Category3', sql.VarChar, form.Category3)
+      .input('Length', sql.Decimal, form.Length)
+      .input('Width', sql.Decimal, form.Width)
+      .input('Height', sql.Decimal, form.Height)
+      .input('MaxQty', sql.Int, form.MaxQty)
+      .input('AvgQty', sql.Int, form.AvgQty)
+      .input('Status', sql.VarChar, form.Status)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .execute('basic_StorageAddressUpdate')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/storageAddressBatchIns', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.VarChar, form.ID)
+      .input('Building', sql.VarChar, form.Building)
+      .input('Floor', sql.VarChar, form.Floor)
+      .input('Area', sql.VarChar, form.Area)
+      .input('Direction', sql.VarChar, form.Direction)
+      .input('Category1', sql.VarChar, form.Category1)
+      .input('Category2', sql.VarChar, form.Category2)
+      .input('Category3', sql.VarChar, form.Category3)
+      .input('Length', sql.Decimal, form.Length)
+      .input('Width', sql.Decimal, form.Width)
+      .input('Height', sql.Decimal, form.Height)
+      .input('MaxQty', sql.Int, form.MaxQty)
+      .input('AvgQty', sql.Int, form.AvgQty)
+      .input('Status', sql.VarChar, form.Status)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('RowStart', sql.TinyInt, form.RowStart)
+      .input('RowEnd', sql.TinyInt, form.RowEnd)
+      .input('ColumnStart', sql.TinyInt, form.ColumnStart)
+      .input('ColumnEnd', sql.TinyInt, form.ColumnEnd)
+      .input('LocationStart', sql.TinyInt, form.LocationStart)
+      .input('LocationEnd', sql.TinyInt, form.LocationEnd)
+      .execute('basic_StorageAddressBatchIns')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/storageAddressDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.VarChar, form.ID)
+      .execute('basic_StorageAddressDelete')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/storageAddressShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('basic_StorageAddressShow')
+
     successResponse(res, { 
       result: queryResult.recordset
     })

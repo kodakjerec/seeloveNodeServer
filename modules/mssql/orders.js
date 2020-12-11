@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
+// Order
 router.post('/ordersShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -122,6 +123,8 @@ router.post('/orderInvalid', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Order Customer
 router.post('/orderCustomerNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -198,6 +201,8 @@ router.post('/orderCustomerEdit', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Order Detail
 router.post('/orderDetailNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -276,6 +281,8 @@ router.post('/orderDetailDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Certificate1
 router.post('/certificate1Show', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -332,14 +339,17 @@ router.post('/orderCertificate1New', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/orderCertificate2New', async (req, res) => {
+router.post('/orderCertificate1Edit', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate1', sql.VarChar, form.Certificate1)
+      .input('Status', sql.VarChar, form.Status)
+      .input('ReportDuration', sql.VarChar, form.ReportDuration)
       .input('IssuanceDate', sql.Date, form.IssuanceDate)
-      .execute('orders_OrderCertificate2New')
+      .execute('orders_OrderCertificate1Edit')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
@@ -354,17 +364,38 @@ router.post('/orderCertificate2New', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/orderCertificate1Edit', async (req, res) => {
+router.post('/orderCertificate1Delete', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Certificate1', sql.VarChar, form.Certificate1)
-      .input('Status', sql.VarChar, form.Status)
-      .input('ReportDuration', sql.VarChar, form.ReportDuration)
+      .execute('orders_OrderCertificate1Delete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Certificate2
+router.post('/orderCertificate2New', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
       .input('IssuanceDate', sql.Date, form.IssuanceDate)
-      .execute('orders_OrderCertificate1Edit')
+      .execute('orders_OrderCertificate2New')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
@@ -403,28 +434,6 @@ router.post('/orderCertificate2Edit', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/orderCertificate1Delete', async (req, res) => {
-  try {
-    let form = req.body.form
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('OrderID', sql.VarChar, form.OrderID)
-      .input('Certificate1', sql.VarChar, form.Certificate1)
-      .execute('orders_OrderCertificate1Delete')
-
-      if (queryResult.recordset[0].code !== 200 ){
-        errorResponse(res, queryResult.recordset[0])
-        return
-      }
-      
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
 router.post('/orderCertificate2Delete', async (req, res) => {
   try {
     let form = req.body.form
@@ -447,6 +456,8 @@ router.post('/orderCertificate2Delete', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Collection Records
 router.post('/collectionRecordsNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -546,6 +557,7 @@ router.post('/collectionRecordsFunctions', async (req, res) => {
   }
 })
 
+// Invoice
 router.post('/invoiceShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -673,6 +685,7 @@ router.post('/invoiceFunctions', async (req, res) => {
   }
 })
 
+// Invoice Detail
 router.post('/invoiceDetailNew', async (req, res) => {
   try {
     let form = req.body.form
@@ -733,7 +746,9 @@ router.post('/invoiceDetailEdit', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/functionsUpdate', async (req, res) => {
+
+// Order Functions
+router.post('/orderFunctionsUpdate', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
@@ -741,7 +756,61 @@ router.post('/functionsUpdate', async (req, res) => {
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Function', sql.VarChar, form.Function)
       .input('Value', sql.VarChar, form.Value)     
-      .execute('orders_FunctionsUpdate')
+      .execute('orders_OrderFunctionsUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Order Detail Functions
+router.post('/orderDetailFunctionsUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('DetailSeq', sql.TinyInt, form.DetailSeq)   
+      .input('Function', sql.VarChar, form.Function)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('Value1', sql.VarChar, form.Value1)
+      .input('Value2', sql.VarChar, form.Value2)  
+      .execute('orders_OrderDetailFunctionsUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderDetailFunctionsDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('DetailSeq', sql.TinyInt, form.DetailSeq)  
+      .input('Function', sql.VarChar, form.Function)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('Value1', sql.VarChar, form.Value1)
+      .input('Value2', sql.VarChar, form.Value2)
+      .execute('orders_OrderDetailFunctionsDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
