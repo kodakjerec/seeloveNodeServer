@@ -18,6 +18,8 @@ const app = express()
 app.use(express.json())
 app.use(cors(corsOptions))
 
+app.disable('x-powered-by')
+
 // 驗證token
 app.use(function (req, res, next) {
   let token = req.headers['authorization']

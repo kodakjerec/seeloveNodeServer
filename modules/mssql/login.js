@@ -3,7 +3,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 
 const router = express.Router()
-const { sql, poolPromise, successResponse } = require('./modules/config')
+const { sql, poolPromise, successResponse, errorResponse } = require('./modules/config')
 const { decrypt } =require('./modules/crypto')
 
 // router.get('/', function(req, res) {
@@ -74,6 +74,30 @@ router.post('/getMenu', async (req, res) => {
     })
 
     successResponse(res, result)
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+router.post('/checkPwd', async (req, res) => {
+  try {
+    let UserID = decrypt(req.body.UserID)
+    let Password = req.body.Password
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('UserID', sql.NVarChar, UserID)
+      .input('Password', sql.NVarChar, Password)
+      .execute('login')
+    
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
   } catch (err) {
     res.status(500)
     res.send(err.message)
