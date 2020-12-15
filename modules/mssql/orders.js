@@ -3,13 +3,25 @@ const router = express.Router()
 const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
 // Order
+router.post('/ordersShowGroup', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .execute('orders_OrdersShowGroup')
+
+    successResponse(res, { 
+      result: JSON.parse(queryResult.recordset[0].filterSettings)[0]
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/ordersShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
-      .input('StartDate', sql.Date, req.body.StartDate)
-      .input('EndDate', sql.Date, req.body.EndDate)
+      .input('searchContent', sql.NVarChar, req.body.searchContent)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .input('ID', sql.VarChar, req.body.ID)
       .execute('orders_OrdersShow')
@@ -597,6 +609,7 @@ router.post('/invoiceHeadNew', async (req, res) => {
       .input('SalesReturnDate', sql.Date, form.SalesReturnDate)
       .execute('orders_InvoiceHeadNew')
 
+      console.log(queryResult.recordset)
     if (queryResult.recordset[0].code !== 200 ){
       throw Error(queryResult.recordset[0].message)
     }
