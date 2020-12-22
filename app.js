@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { sql, poolPromise } = require('./modules/mssql/modules/config')
+const { loginUser, sql, poolPromise } = require('./modules/mssql/modules/config')
 const { decrypt } =require('./modules/mssql/modules/crypto')
 const requestIp = require('request-ip')
 
@@ -71,6 +71,10 @@ app.use(async function (req, res, next) {
     .input('CMD', sql.NVarChar, form.CMD)
     .input('Data', sql.NVarChar, form.Data)
     .execute('common_CmdLog')
+
+  loginUser.userID = form.UserID
+  loginUser.IP = form.IP
+  console.log(loginUser)
 
   next()
 })

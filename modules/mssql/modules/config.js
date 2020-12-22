@@ -5,6 +5,10 @@ const config = {
   server: '192.168.2.210', // You can use 'localhost\\instance' to connect to named instance
   database: 'seelove100'
 }
+const loginUser = {
+  userID: '',
+  IP: ''
+}
 
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
@@ -25,5 +29,5 @@ const successResponse = function (response, result) {
 }
 
 module.exports = {
-  sql, poolPromise, errorResponse, successResponse
+  loginUser, sql, poolPromise, errorResponse, successResponse
 }

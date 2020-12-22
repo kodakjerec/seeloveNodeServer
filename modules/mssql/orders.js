@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
+const { loginUser, sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
 // Order
 router.post('/ordersShowGroup', async (req, res) => {
@@ -23,7 +23,7 @@ router.post('/ordersShow', async (req, res) => {
     const queryResult = await pool.request()
       .input('searchContent', sql.NVarChar, req.body.searchContent)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .input('ID', sql.VarChar, req.body.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrdersShow')
 
     successResponse(res, { 
@@ -301,23 +301,8 @@ router.post('/certificate1Show', async (req, res) => {
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_Certificate1Show')
-
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-router.post('/certificate2Show', async (req, res) => {
-  try {
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
-      .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('orders_Certificate2Show')
 
     successResponse(res, { 
       result: queryResult.recordset
@@ -400,6 +385,23 @@ router.post('/orderCertificate1Delete', async (req, res) => {
 })
 
 // Certificate2
+router.post('/certificate2Show', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_Certificate2Show')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/orderCertificate2New', async (req, res) => {
   try {
     let form = req.body.form
@@ -608,8 +610,6 @@ router.post('/invoiceHeadNew', async (req, res) => {
       .input('Status', sql.VarChar, form.Status)
       .input('SalesReturnDate', sql.Date, form.SalesReturnDate)
       .execute('orders_InvoiceHeadNew')
-
-      console.log(queryResult.recordset)
     if (queryResult.recordset[0].code !== 200 ){
       throw Error(queryResult.recordset[0].message)
     }

@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const { sql, poolPromise, successResponse } = require('./modules/config')
+const { loginUser, sql, poolPromise, successResponse } = require('./modules/config')
 
 router.post('/assign', async (req, res) => {
   try {
@@ -13,7 +13,7 @@ router.post('/assign', async (req, res) => {
       .input('Type', sql.VarChar, form.Type)
       .input('Prefix', sql.VarChar, form.Prefix)
       .input('Status', sql.VarChar, form.Status)
-      .input('ID', sql.VarChar, form.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .input('SignResult', sql.TinyInt, form.SignResult)
       .input('Memo', sql.NVarChar, form.Memo)
       .execute('signOff_Assign')
