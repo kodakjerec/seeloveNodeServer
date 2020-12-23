@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const { sql, poolPromise, successResponse } = require('./modules/config')
-const Excel = require('exceljs')
-const path = require('path')
 
 router.post('/employeesToExcel', async (req, res) => {
   try {
@@ -41,6 +39,24 @@ router.post('/bonus1ToExcel', async (req, res) => {
   }
 })
 router.post('/bonus2ToExcel', async (req, res) => {
+  try {
+    successResponse(res, {})
+    
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/fKOrderPrint', async (req, res) => {
+  try {
+    successResponse(res, {})
+    
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/fKOrderRpt', async (req, res) => {
   try {
     successResponse(res, {})
     

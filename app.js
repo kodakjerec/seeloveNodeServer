@@ -74,7 +74,6 @@ app.use(async function (req, res, next) {
 
   loginUser.userID = form.UserID
   loginUser.IP = form.IP
-  console.log(loginUser)
 
   next()
 })
