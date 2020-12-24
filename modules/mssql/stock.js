@@ -77,34 +77,6 @@ router.post('/inboundOrderDelete', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/inboundOrderPutOn', async (req, res) => {
-  try {
-    let form = req.body.form
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-    .input('ID', sql.NVarChar, form.ID)
-    .input('OrderDate', sql.Date, form.OrderDate)
-    .input('Status', sql.VarChar, form.Status)
-    .input('CreateID', sql.VarChar, form.CreateID)
-    .input('Amount', sql.Decimal, form.Amount)
-    .input('Prefix', sql.VarChar, form.Prefix)
-    .input('Memo', sql.NVarChar, form.Memo)
-    .input('Supplier', sql.VarChar, form.Supplier)
-      .execute('stock_inboundOrderPutOn')
-
-      if (queryResult.recordset[0].code !== 200 ){
-        errorResponse(res, queryResult.recordset[0])
-        return
-      }
-      
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
 
 // inbound Order Detail
 router.post('/inboundOrderDetailUpdate', async (req, res) => {
@@ -180,6 +152,10 @@ router.post('/stockNowShow', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Transport Order
+
+// Transport Order Detail
 
 router.post('/getObject', async (req, res) => {
   try {
