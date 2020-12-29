@@ -47,24 +47,6 @@ router.post('/bonus2ToExcel', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/fKOrderPrint', async (req, res) => {
-  try {
-    successResponse(res, {})
-    
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-router.post('/fKOrderRpt', async (req, res) => {
-  try {
-    successResponse(res, {})
-    
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
 
 router.post('/getDropdownList', async (req, res) => {
   try {

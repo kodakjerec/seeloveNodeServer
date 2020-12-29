@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const { sql, poolPromise, successResponse } = require('./modules/config')
+const { loginUser, sql, poolPromise, successResponse } = require('./modules/config')
 
 // inbound
 router.post('/inboundOrderShow', async (req, res) => {
@@ -10,7 +10,7 @@ router.post('/inboundOrderShow', async (req, res) => {
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .input('ID', sql.VarChar, req.body.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_inboundOrderShow')
 
     successResponse(res, { 
@@ -141,7 +141,7 @@ router.post('/stockNowShow', async (req, res) => {
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .input('ID', sql.VarChar, req.body.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_StockNowShow')
 
     successResponse(res, { 
@@ -154,8 +154,121 @@ router.post('/stockNowShow', async (req, res) => {
 })
 
 // Transport Order
+router.post('/transportOrderShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('stock_TransportOrderShow')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/transportOrderUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('OrderDate', sql.Date, form.OrderDate)
+      .input('Status', sql.VarChar, form.Status)
+      .input('CreateID', sql.VarChar, form.CreateID)
+      .input('Prefix', sql.VarChar, form.Prefix)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .execute('stock_TransportOrderUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/transportOrderDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('ID', sql.NVarChar, form.ID)
+      .execute('stock_TransportOrderDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Transport Order Detail
+router.post('/TransportOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Name', sql.NVarChar, form.Name)
+      .input('Qty', sql.Int, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .execute('stock_transportOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/inboundOrderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('OrderID', sql.VarChar, form.OrderID)
+    .input('Seq', sql.TinyInt, form.Seq)
+      .execute('stock_transportOrderDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 router.post('/getObject', async (req, res) => {
   try {

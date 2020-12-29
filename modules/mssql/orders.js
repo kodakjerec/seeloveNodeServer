@@ -839,25 +839,6 @@ router.post('/orderDetailFunctionsDelete', async (req, res) => {
   }
 })
 
-// fKOrder
-router.post('/fKOrdersShow', async (req, res) => {
-  try {
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('searchContent', sql.NVarChar, req.body.searchContent)
-      .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .input('userID', sql.VarChar, loginUser.userID)
-      .execute('orders_FKOrdersShow')
-
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
