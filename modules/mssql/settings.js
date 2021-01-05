@@ -4,39 +4,6 @@ const router = express.Router()
 const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 const { decrypt } =require('./modules/crypto')
 
-router.post('/getObject', async (req, res) => {
-  try {
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
-      .input('ID', sql.NVarChar, req.body.ID)
-      .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('settings_GetObject')
-      
-    successResponse(res, {
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-router.post('/getDropdownList', async (req, res) => {
-  try {
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
-      .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .execute('settings_GetDropdownList')
-
-    successResponse(res, {
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
 router.post('/getUserProg', async (req, res) => {
   try {
     let UserID = decrypt(req.body.UserID)
@@ -429,4 +396,38 @@ router.post('/announcementDelete', async (req, res) => {
   }
 })
 
+router.post('/getObject', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('settings_GetObject')
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/getDropdownList', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('settings_GetDropdownList')
+
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 module.exports = router

@@ -52,7 +52,8 @@ router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('reports_GetDropdownList')
       

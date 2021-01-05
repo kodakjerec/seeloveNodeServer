@@ -373,7 +373,7 @@ router.post('/productNew', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('AccountingID', sql.NVarChar, form.AccountingID)
-      .input('AccountingName', sql.NVarChar, form.AccountingName)
+      .input('InvoiceName', sql.NVarChar, form.InvoiceName)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('Unit', sql.VarChar, form.Unit)
       .input('Price', sql.Decimal, form.Price)
@@ -406,7 +406,7 @@ router.post('/productEdit', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('AccountingID', sql.NVarChar, form.AccountingID)
-      .input('AccountingName', sql.NVarChar, form.AccountingName)
+      .input('InvoiceName', sql.NVarChar, form.InvoiceName)
       .input('Qty', sql.SmallInt, form.Qty)
       .input('Unit', sql.VarChar, form.Unit)
       .input('Price', sql.Decimal, form.Price)
@@ -1016,7 +1016,8 @@ router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetDropdownList')
       
@@ -1033,7 +1034,7 @@ router.post('/getObject', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('type', sql.NVarChar, req.body.type)
-      .input('ID', sql.NVarChar, req.body.ID)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetObject')
       

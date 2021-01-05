@@ -488,6 +488,7 @@ router.post('/collectionRecordsNew', async (req, res) => {
       .input('Memo', sql.NVarChar, form.Memo)
       .input('ReceivedID', sql.VarChar, form.ReceivedID)
       .input('ChequeDate', sql.Date, form.ChequeDate)
+      .input('InvoiceName', sql.NVarChar, form.InvoiceName)
       .execute('orders_CollectionRecordsNew')
 
     if (queryResult.recordset[0].code !== 200 ){
@@ -518,6 +519,7 @@ router.post('/collectionRecordsEdit', async (req, res) => {
       .input('Memo', sql.NVarChar, form.Memo)
       .input('ReceivedID', sql.VarChar, form.ReceivedID)
       .input('ChequeDate', sql.Date, form.ChequeDate)
+      .input('InvoiceName', sql.NVarChar, form.InvoiceName)
       .execute('orders_CollectionRecordsEdit')
 
     if (queryResult.recordset[0].code !== 200 ){
@@ -557,8 +559,8 @@ router.post('/collectionRecordsFunctions', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
-      .input('OrderID', sql.NVarChar, req.body.OrderID)
+      .input('type', sql.VarChar, req.body.type)
+      .input('OrderID', sql.VarChar, req.body.OrderID)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_CollectionRecordsFunctions')
       
@@ -682,10 +684,10 @@ router.post('/invoiceFunctions', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
-      .input('OrderID', sql.NVarChar, req.body.OrderID)
-      .input('InvoiceID', sql.NVarChar, req.body.InvoiceID)
-      .input('Seq', sql.NVarChar, req.body.Seq)
+      .input('type', sql.VarChar, req.body.type)
+      .input('OrderID', sql.VarChar, req.body.OrderID)
+      .input('InvoiceID', sql.VarChar, req.body.InvoiceID)
+      .input('Seq', sql.VarChar, req.body.Seq)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_InvoiceFunctions')
       
@@ -705,47 +707,13 @@ router.post('/invoiceDetailNew', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('InvoiceID', sql.VarChar, form.InvoiceID)
-      .input('InvoiceDate', sql.Date, form.InvoiceDate)
       .input('Seq', sql.TinyInt, form.Seq)
-      .input('AccountingID', sql.VarChar, form.AccountingID)
-      .input('AccountingName', sql.NVarChar, form.AccountingName)
+      .input('InvoiceName', sql.NVarChar, form.InvoiceName)
       .input('Price', sql.Decimal, form.Price)
       .input('Qty', sql.Decimal, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
       .input('Tax', sql.Decimal, form.Tax)
-      .input('AmountNoTax', sql.Decimal, form.AmountNoTax)
-      .input('Memo', sql.NVarChar, form.Memo)
       .execute('orders_InvoiceDetailNew')
-
-    if (queryResult.recordset[0].code !== 200 ){
-      throw Error(queryResult.recordset[0].message)
-    }
-
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-router.post('/invoiceDetailEdit', async (req, res) => {
-  try {
-    let form = req.body.form
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('InvoiceID', sql.VarChar, form.InvoiceID)
-      .input('InvoiceDate', sql.Date, form.InvoiceDate)
-      .input('Seq', sql.TinyInt, form.Seq)
-      .input('AccountingID', sql.VarChar, form.AccountingID)
-      .input('AccountingName', sql.NVarChar, form.AccountingName)
-      .input('Price', sql.Decimal, form.Price)
-      .input('Qty', sql.Decimal, form.Qty)
-      .input('Amount', sql.Decimal, form.Amount)
-      .input('Tax', sql.Decimal, form.Tax)
-      .input('AmountNoTax', sql.Decimal, form.AmountNoTax)
-      .input('Memo', sql.NVarChar, form.Memo)
-      .execute('orders_InvoiceDetailEdit')
 
     if (queryResult.recordset[0].code !== 200 ){
       throw Error(queryResult.recordset[0].message)
@@ -839,11 +807,69 @@ router.post('/orderDetailFunctionsDelete', async (req, res) => {
   }
 })
 
+// Anza Order
+router.post('/anzaOrderShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_AnzaOrderShow')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/anzaOperate', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .execute('orders_AnzaOperate')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderAnzaOrderNew', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('CustomerID', sql.VarChar, form.CustomerID)  
+      .input('ScheduledDate', sql.Date, form.ScheduledDate)
+      .input('ExpirationDate', sql.Date, form.ExpirationDate)
+      .execute('orders_OrderAnzaOrderNew')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_GetDropdownList')
       
@@ -859,8 +885,8 @@ router.post('/getObject', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('type', sql.NVarChar, req.body.type)
-      .input('ID', sql.NVarChar, req.body.ID)
+      .input('type', sql.VarChar, req.body.type)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_GetObject')
       
