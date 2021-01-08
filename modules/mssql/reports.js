@@ -47,6 +47,15 @@ router.post('/bonus2ToExcel', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/anzaReportTotal', async (req, res) => {
+  try {
+    successResponse(res, {})
+    
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 router.post('/getDropdownList', async (req, res) => {
   try {

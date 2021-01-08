@@ -849,6 +849,7 @@ router.post('/orderAnzaOrderNew', async (req, res) => {
       .input('CustomerID', sql.VarChar, form.CustomerID)  
       .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
+      .input('ProductID', sql.VarChar, form.ProductID)
       .execute('orders_OrderAnzaOrderNew')
 
       if (queryResult.recordset[0].code !== 200 ){

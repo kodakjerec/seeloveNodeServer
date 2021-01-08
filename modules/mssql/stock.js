@@ -152,6 +152,43 @@ router.post('/stockNowShow', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/findStorageID', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ProductID', sql.VarChar, req.body.ProductID)
+      .input('Purpose', sql.VarChar, req.body.Purpose)
+      .input('Qty', sql.Int, req.body.Qty)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('stock_FindStorageID')
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/checkValidate', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('ProductID', sql.VarChar, req.body.ProductID)
+    .input('Purpose', sql.VarChar, req.body.Purpose)
+    .input('Qty', sql.Int, req.body.Qty)
+    .input('StorageID', sql.VarChar, req.body.StorageID)
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('stock_CheckValidate')
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Transport Order
 router.post('/transportOrderShow', async (req, res) => {

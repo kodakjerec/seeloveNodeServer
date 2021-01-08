@@ -917,6 +917,7 @@ router.post('/storageAddressUpdate', async (req, res) => {
       .input('AvgQty', sql.Int, form.AvgQty)
       .input('Status', sql.VarChar, form.Status)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('StorageType', sql.VarChar, form.StorageType)
       .execute('basic_StorageAddressUpdate')
 
     successResponse(res, { 
@@ -953,6 +954,7 @@ router.post('/storageAddressBatchIns', async (req, res) => {
       .input('ColumnEnd', sql.TinyInt, form.ColumnEnd)
       .input('LocationStart', sql.TinyInt, form.LocationStart)
       .input('LocationEnd', sql.TinyInt, form.LocationEnd)
+      .input('StorageType', sql.VarChar, form.StorageType)
       .execute('basic_StorageAddressBatchIns')
 
     successResponse(res, { 
