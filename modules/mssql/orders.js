@@ -22,6 +22,8 @@ router.post('/ordersShow', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('searchContent', sql.NVarChar, req.body.searchContent)
+      .input('pagination', sql.NVarChar, req.body.pagination)
+      .input('sortable', sql.NVarChar, req.body.sortable)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrdersShow')
@@ -561,6 +563,8 @@ router.post('/collectionRecordsFunctions', async (req, res) => {
     const queryResult = await pool.request()
       .input('type', sql.VarChar, req.body.type)
       .input('OrderID', sql.VarChar, req.body.OrderID)
+      .input('Seq', sql.TinyInt, req.body.Seq)
+      .input('BindSeq', sql.NVarChar, req.body.BindSeq)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_CollectionRecordsFunctions')
       
@@ -814,6 +818,8 @@ router.post('/fKOrdersShow', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('searchContent', sql.NVarChar, req.body.searchContent)
+      .input('pagination', sql.NVarChar, req.body.pagination)
+      .input('sortable', sql.NVarChar, req.body.sortable)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_FKOrdersShow')
@@ -886,6 +892,59 @@ router.post('/orderAnzaOrderNew', async (req, res) => {
     res.send(err.message)
   }
 })
+
+// Order Installment
+router.post('/installmentDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.SmallInt, form.Seq) 
+      .input('InstallmentName', sql.NVarChar, form.InstallmentName)
+      .input('ScheduledDate', sql.Date, form.ScheduledDate)
+      .input('ScheduledAmount', sql.Decimal, form.ScheduledAmount)  
+      .input('PaymentMethod', sql.VarChar, form.PaymentMethod)
+      .input('PaymentFrequency', sql.VarChar, form.PaymentFrequency)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .execute('orders_InstallmentDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/installmentDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.SmallInt, form.Seq)
+      .execute('orders_InstallmentDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise

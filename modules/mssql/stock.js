@@ -257,7 +257,7 @@ router.post('/transportOrderDelete', async (req, res) => {
 })
 
 // Transport Order Detail
-router.post('/TransportOrderDetailUpdate', async (req, res) => {
+router.post('/transportOrderDetailUpdate', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
@@ -269,7 +269,7 @@ router.post('/TransportOrderDetailUpdate', async (req, res) => {
       .input('Qty', sql.Int, form.Qty)
       .input('FromStorageID', sql.VarChar, form.FromStorageID)
       .input('ToStorageID', sql.VarChar, form.ToStorageID)
-      .execute('stock_transportOrderDetailUpdate')
+      .execute('stock_TransportOrderDetailUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
@@ -284,14 +284,14 @@ router.post('/TransportOrderDetailUpdate', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/inboundOrderDetailDelete', async (req, res) => {
+router.post('/transportOrderDetailDelete', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
     .input('OrderID', sql.VarChar, form.OrderID)
     .input('Seq', sql.TinyInt, form.Seq)
-      .execute('stock_transportOrderDetailDelete')
+      .execute('stock_TransportOrderDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
