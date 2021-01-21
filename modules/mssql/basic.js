@@ -855,6 +855,7 @@ router.post('/projectFunctionsUpdate', async (req, res) => {
       .input('ProjectID', sql.NVarChar, form.ProjectID)
       .input('Function', sql.VarChar, form.Function)
       .input('Available', sql.TinyInt, form.Available)
+      .input('Extend', sql.NVarChar, form.Extend)
       .execute('basic_ProjectFunctionsUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
