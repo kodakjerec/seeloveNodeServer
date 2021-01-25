@@ -892,6 +892,25 @@ router.post('/orderAnzaOrderNew', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/anzaOrderShow2', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('searchContent', sql.NVarChar, req.body.searchContent)
+      .input('pagination', sql.NVarChar, req.body.pagination)
+      .input('sortable', sql.NVarChar, req.body.sortable)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_AnzaOrderShow2')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Order Installment
 router.post('/installmentDetailUpdate', async (req, res) => {
