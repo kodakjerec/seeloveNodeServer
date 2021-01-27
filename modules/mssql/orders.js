@@ -162,6 +162,9 @@ router.post('/orderCustomerNew', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
+      .input('Memo',sql.NVarChar, form.Memo)
+      .input('CompanyID', sql.VarChar, form.CompanyID)
+
       .execute('orders_OrderCustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -200,6 +203,8 @@ router.post('/orderCustomerEdit', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
+      .input('Memo',sql.NVarChar, form.Memo)
+      .input('CompanyID', sql.VarChar, form.CompanyID)
       .execute('orders_OrderCustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -835,11 +840,27 @@ router.post('/fKOrdersShow', async (req, res) => {
 
 
 // Anza Order
+router.post('/anzaAlarm', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_AnzaAlarm')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/anzaOrderShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('keyword', sql.VarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderShow')
@@ -867,17 +888,19 @@ router.post('/anzaOperate', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/orderAnzaOrderNew', async (req, res) => {
+router.post('/anzaOrderUpdate', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
+      .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('CustomerID', sql.VarChar, form.CustomerID)  
       .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
       .input('ProductID', sql.VarChar, form.ProductID)
-      .execute('orders_OrderAnzaOrderNew')
+      .input('Memo', sql.NVarChar, form.Memo)
+      .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
