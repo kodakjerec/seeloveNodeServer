@@ -51,6 +51,7 @@ router.post('/orderNew', async (req, res) => {
       .input('Amount', sql.Decimal, form.Amount)
       .input('Prefix', sql.VarChar, form.Prefix)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -80,6 +81,7 @@ router.post('/orderEdit', async (req, res) => {
       .input('Qty', sql.SmallInt, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -122,6 +124,7 @@ router.post('/orderInvalid', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('ID', sql.NVarChar, form.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderInvalid')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -164,7 +167,7 @@ router.post('/orderCustomerNew', async (req, res) => {
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .input('Memo',sql.NVarChar, form.Memo)
       .input('CompanyID', sql.VarChar, form.CompanyID)
-
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderCustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -205,6 +208,7 @@ router.post('/orderCustomerEdit', async (req, res) => {
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .input('Memo',sql.NVarChar, form.Memo)
       .input('CompanyID', sql.VarChar, form.CompanyID)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderCustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -878,6 +882,7 @@ router.post('/anzaOperate', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOperate')
 
     successResponse(res, { 
@@ -900,6 +905,7 @@ router.post('/anzaOrderUpdate', async (req, res) => {
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
       .input('ProductID', sql.VarChar, form.ProductID)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){

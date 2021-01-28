@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
+const { loginUser, sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
 // Company
 router.post('/companiesShow', async (req, res) => {
@@ -41,6 +41,7 @@ router.post('/companyNew', async (req, res) => {
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .input('Nickname', sql.NVarChar, form.Nickname)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('basic_CompanyNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -78,6 +79,7 @@ router.post('/companyEdit', async (req, res) => {
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
       .input('Nickname', sql.NVarChar, form.Nickname)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('basic_CompanyEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -158,6 +160,7 @@ router.post('/customerNew', async (req, res) => {
       .input('Status', sql.VarChar, form.Status)
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -200,6 +203,7 @@ router.post('/customerEdit', async (req, res) => {
       .input('Status', sql.VarChar, form.Status)
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
+      .input('userID', sql.VarChar, loginUser.userID)
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){

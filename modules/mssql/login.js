@@ -39,7 +39,6 @@ router.post('/login', async (req, res) => {
     res.send(err.message)
   }
 })
-
 router.post('/logout', async (req, res) => {
     let UserID = decrypt(req.body.UserID)
     const pool = await poolPromise
@@ -49,7 +48,6 @@ router.post('/logout', async (req, res) => {
     
     successResponse(res, {})
 })
-
 router.post('/getMenu', async (req, res) => {
   try {
     let UserID = decrypt(req.body.UserID)
@@ -79,7 +77,20 @@ router.post('/getMenu', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/version', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .execute('login_Version')
 
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/checkPwd', async (req, res) => {
   try {
     let UserID = decrypt(req.body.UserID)
