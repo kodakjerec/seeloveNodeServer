@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { loginUser, sql, poolPromise } = require('./modules/mssql/modules/config')
+const { userCheck } = require('./modules/mssql/modules/nedb')
 const { decrypt } =require('./modules/mssql/modules/crypto')
 const requestIp = require('request-ip')
 
@@ -24,7 +25,7 @@ app.disable('x-powered-by')
 app.use(function (req, res, next) {
   let token = req.headers['authorization']
   if (token) {
-    jwt.verify(token, 'seeLove_83799375', function (err, decoded) {
+    jwt.verify(token, 'seeLove_83799375', async function (err, decoded) {
       // 解碼失敗
       if (err) {
         const { name, message } = err
@@ -34,6 +35,13 @@ app.use(function (req, res, next) {
       } else {
         // 解碼成功
         req.decoded = decoded
+
+        // 檢查是否重複登入
+        let multipleLoginIP = await userCheck(req.decoded.UserID, token)
+        if (multipleLoginIP !== ''){
+          res.status(401)
+          return res.json({success: false, name: 'MultipleLogin', message: 'IP: '+multipleLoginIP })
+        }
         next()
       }
     })

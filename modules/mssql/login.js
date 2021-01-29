@@ -2,6 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const { sql, poolPromise, successResponse, errorResponse, jwtSign } = require('./modules/config')
+const { userInsert, userRemove } = require('./modules/nedb')
 const { decrypt } =require('./modules/crypto')
 
 // router.get('/', function(req, res) {
@@ -24,6 +25,8 @@ router.post('/login', async (req, res) => {
     } else {
       res.status(401)
     }
+
+    userInsert(UserID, token)
     
     successResponse(res, { 
       result: result.recordset,
@@ -41,6 +44,8 @@ router.post('/logout', async (req, res) => {
       .input('UserID', sql.NVarChar, UserID)
       .execute('login_Logout')
     
+    userRemove(UserID)
+
     successResponse(res, {})
 })
 router.post('/getMenu', async (req, res) => {
