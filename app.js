@@ -25,15 +25,20 @@ app.use(function (req, res, next) {
   let token = req.headers['authorization']
   if (token) {
     jwt.verify(token, 'seeLove_83799375', function (err, decoded) {
+      // 解碼失敗
       if (err) {
+        const { name, message } = err
+
         res.status(401)
-        return res.json({success: false, message: 'Failed to authenticate token.'})
+        return res.json({success: false, name: name, message: message})
       } else {
+        // 解碼成功
         req.decoded = decoded
         next()
       }
     })
   } else {
+    // 如果沒有token, 又是登入頁面來的, 就pass
     if (req.originalUrl.indexOf('/login')>=0) {
       next()
     } else {

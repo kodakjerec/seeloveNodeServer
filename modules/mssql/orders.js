@@ -844,6 +844,20 @@ router.post('/fKOrdersShow', async (req, res) => {
 
 
 // Anza Order
+router.post('/anzaShowGroup', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .execute('orders_AnzaShowGroup')
+
+    successResponse(res, { 
+      result: JSON.parse(queryResult.recordset[0].filterSettings)[0]
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/anzaAlarm', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -993,6 +1007,7 @@ router.post('/installmentDetailDelete', async (req, res) => {
   }
 })
 
+// Others
 router.post('/getDropdownList', async (req, res) => {
   try {
     const pool = await poolPromise

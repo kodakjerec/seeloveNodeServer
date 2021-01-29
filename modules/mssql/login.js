@@ -1,9 +1,7 @@
 const express = require('express')
-// jwt
-const jwt = require('jsonwebtoken')
 
 const router = express.Router()
-const { sql, poolPromise, successResponse, errorResponse } = require('./modules/config')
+const { sql, poolPromise, successResponse, errorResponse, jwtSign } = require('./modules/config')
 const { decrypt } =require('./modules/crypto')
 
 // router.get('/', function(req, res) {
@@ -22,10 +20,7 @@ router.post('/login', async (req, res) => {
       .execute('login')
 
     if (result.recordset[0]['code'] === 200){
-      token = jwt.sign({
-        UserID: UserID,
-        lastTime: new Date()
-      },'seeLove_83799375')
+      token = jwtSign(UserID)
     } else {
       res.status(401)
     }
