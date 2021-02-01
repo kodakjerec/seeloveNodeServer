@@ -139,9 +139,9 @@ router.post('/stockNowShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('searchContent', sql.NVarChar, req.body.searchContent)
+      .input('pagination', sql.NVarChar, req.body.pagination)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
-      .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_StockNowShow')
 
     successResponse(res, { 
