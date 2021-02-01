@@ -893,9 +893,15 @@ router.post('/anzaOrderShow', async (req, res) => {
 })
 router.post('/anzaOperate', async (req, res) => {
   try {
+    let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('type', sql.VarChar, form.type)
+      .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
+      .input('CustomerID', sql.VarChar, form.CustomerID)
+      .input('StorageID', sql.VarChar, form.StorageID)
+      .input('RealDate', sql.Date, form.RealDate)
+      .input('CompleteDate', sql.Date, form.CompleteDate)
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOperate')
 
