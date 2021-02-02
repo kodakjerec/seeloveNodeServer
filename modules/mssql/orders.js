@@ -165,7 +165,7 @@ router.post('/orderCustomerNew', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
-      .input('Memo',sql.NVarChar, form.Memo)
+      .input('ModifyType',sql.NVarChar, form.ModifyType)
       .input('CompanyID', sql.VarChar, form.CompanyID)
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderCustomerNew')
@@ -206,7 +206,7 @@ router.post('/orderCustomerEdit', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('EmployeeID', sql.NVarChar, form.EmployeeID)
-      .input('Memo',sql.NVarChar, form.Memo)
+      .input('ModifyType',sql.NVarChar, form.ModifyType)
       .input('CompanyID', sql.VarChar, form.CompanyID)
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrderCustomerEdit')
@@ -905,6 +905,11 @@ router.post('/anzaOperate', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOperate')
 
+    if (queryResult.recordset[0].code !== 200 ){
+      errorResponse(res, queryResult.recordset[0])
+      return
+    }
+
     successResponse(res, { 
       result: queryResult.recordset
     })
@@ -924,7 +929,7 @@ router.post('/anzaOrderUpdate', async (req, res) => {
       .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
       .input('ProductID', sql.VarChar, form.ProductID)
-      .input('Memo', sql.NVarChar, form.Memo)
+      .input('ModifyType', sql.NVarChar, form.ModifyType)
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderUpdate')
 

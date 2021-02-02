@@ -234,6 +234,7 @@ router.post('/settingsNew', async (req, res) => {
       .input('Language', sql.TinyInt, form.Language)
       .input('Memo', sql.NVarChar, form.Memo)
       .input('ParentCategory', sql.NVarChar, form.ParentCategory)
+      .input('Danger', sql.TinyInt, form.Danger)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_SettingsNew')
 
@@ -262,6 +263,7 @@ router.post('/settingsEdit', async (req, res) => {
       .input('Language', sql.TinyInt, form.Language)
       .input('Memo', sql.NVarChar, form.Memo)
       .input('ParentCategory', sql.NVarChar, form.ParentCategory)
+      .input('Danger', sql.TinyInt, form.Danger)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_SettingsEdit')
 
