@@ -189,6 +189,52 @@ router.post('/checkValidate', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/mapGet', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('Building', sql.VarChar, req.body.Building)
+    .input('Floor', sql.VarChar, req.body.Floor)
+    .input('Area', sql.VarChar, req.body.Area)
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('stock_MapGet')
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/mapUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('Building', sql.VarChar, form.Building)
+    .input('Floor', sql.VarChar, form.Floor)
+    .input('Area', sql.VarChar, form.Area)
+    .input('StorageID', sql.VarChar, form.StorageID)
+    .input('xAxis', sql.Float, form.xAxis)
+    .input('yAxis', sql.Float, form.yAxis)
+    .input('Length', sql.Decimal, form.Length)
+    .input('Width', sql.Decimal, form.Width)
+    .execute('stock_MapUpdate')
+
+    if (queryResult.recordset[0].code !== 200 ){
+      errorResponse(res, queryResult.recordset[0])
+      return
+    }
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Transport Order
 router.post('/transportOrderShow', async (req, res) => {

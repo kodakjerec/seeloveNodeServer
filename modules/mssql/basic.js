@@ -1,5 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const exceljs = require('exceljs')
+const fs =require('fs')
+const path = require('path')
 const { loginUser, sql, poolPromise, errorResponse, successResponse } = require('./modules/config')
 
 // Company
@@ -925,6 +929,11 @@ router.post('/storageAddressUpdate', async (req, res) => {
       .input('StorageType', sql.VarChar, form.StorageType)
       .execute('basic_StorageAddressUpdate')
 
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
     successResponse(res, { 
       result: queryResult.recordset
     })
@@ -962,6 +971,11 @@ router.post('/storageAddressBatchIns', async (req, res) => {
       .input('StorageType', sql.VarChar, form.StorageType)
       .execute('basic_StorageAddressBatchIns')
 
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
     successResponse(res, { 
       result: queryResult.recordset
     })
@@ -977,6 +991,11 @@ router.post('/storageAddressDelete', async (req, res) => {
     const queryResult = await pool.request()
       .input('ID', sql.VarChar, form.ID)
       .execute('basic_StorageAddressDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
 
     successResponse(res, { 
       result: queryResult.recordset
@@ -1003,6 +1022,99 @@ router.post('/storageAddressShow', async (req, res) => {
     res.send(err.message)
   }
 })
+router.get('/storageAddressExportExcel', async (req, res) => {
+  try {
+    res.header('code', '200')
+    res.download(path.join(__dirname, '../download', 'storageAddressExport.xlsx'))
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'modules/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname + '-' + Date.now())
+  }
+})
+const upload = multer({ storage: storage })
+router.post('/storageAddressUpload', upload.single('file') , async (req, res) => {
+  try {
+    let fromFile = req.file
+    let successCount = 0
+    let failCount = 0
+    const pool = await poolPromise
+
+    // 解析xlsx
+    let workbook = new exceljs.Workbook()
+    workbook = await workbook.xlsx.readFile(fromFile.path)
+    // 只找第一個分頁
+    let worksheet = workbook.getWorksheet(1)
+    // 第一行是標題, 從第二行開始
+    for (let i=2; i <= worksheet.rowCount; i++){
+      let row = worksheet.getRow(i)
+      let isUpdate = row.getCell(1).value
+
+      if (isUpdate) {
+        const queryResult = await pool.request()
+        .input('ID', sql.VarChar, row.getCell(2).value)
+        .input('Building', sql.VarChar, row.getCell(3).value)
+        .input('Floor', sql.VarChar, row.getCell(4).value)
+        .input('Area', sql.VarChar, row.getCell(5).value)
+        .input('Direction', sql.VarChar, row.getCell(6).value)
+        .input('Category1', sql.VarChar, row.getCell(7).value)
+        .input('Category2', sql.VarChar, row.getCell(8).value)
+        .input('Category3', sql.VarChar, row.getCell(9).value)
+        .input('Length', sql.Decimal, row.getCell(10).value)
+        .input('Width', sql.Decimal, row.getCell(11).value)
+        .input('Height', sql.Decimal, row.getCell(12).value)
+        .input('MaxQty', sql.Int, row.getCell(13).value)
+        .input('AvgQty', sql.Int, row.getCell(14).value)
+        .input('Status', sql.VarChar, '1')
+        .input('Memo', sql.NVarChar, row.getCell(15).value)
+        .input('StorageType', sql.VarChar, row.getCell(16).value)
+        .execute('basic_StorageAddressUpdate')
+
+        if (queryResult.recordset[0].code !== 200 ){
+          failCount++
+        } else {
+          successCount++
+        }
+      } else {
+        const queryResult = await pool.request()
+        .input('ID', sql.VarChar, row.getCell(2).value)
+        .execute('basic_StorageAddressDelete')
+
+        if (queryResult.recordset[0].code !== 200 ){
+          failCount++
+        } else {
+          successCount++
+        }
+      }
+    }
+
+    // 刪除檔案
+    fs.unlink(fromFile.path, (err) => {
+      if (err) {
+        return
+      }
+    })
+    successResponse(res,{
+      result: {
+        successCount: successCount,
+        failCount: failCount
+      }
+    })
+    
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 
 router.post('/checkValidate', async (req, res) => {
   try {

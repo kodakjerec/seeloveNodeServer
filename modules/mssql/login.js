@@ -5,8 +5,51 @@ const { sql, poolPromise, successResponse, errorResponse, jwtSign } = require('.
 const { userInsert, userRemove } = require('./modules/nedb')
 const { decrypt } =require('./modules/crypto')
 
+// get用法
 // router.get('/', function(req, res) {
 //   res.send('home page!')
+// })
+
+// 下載檔案用法
+// router.get('/storageAddressExportExcel', async (req, res) => {
+//   try {
+//     let workbook = new exceljs.Workbook()
+//     let worksheet = workbook.addWorksheet('Detail')
+
+//     const pool = await poolPromise
+//     const queryResult = await pool.request()
+//       .input('type', sql.NVarChar, 'storageAddress')
+//       .input('keyword', sql.VarChar, 'SKU301')
+//       .input('locale', sql.VarChar, req.headers['clientlocale'])
+//       .execute('basic_GetObject')
+
+//       let columnIndex = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+//       let i=0
+//       Object.getOwnPropertyNames(queryResult.recordset[0]).forEach(column => {
+//         // 計算excel欄位從A~Z AA~ZZ
+//         let columnName = ''
+//         if (i<26) {
+//           columnName = columnIndex[i]
+//         } else {
+//           columnName = columnIndex[(i/26)-1]  // 第一位英文
+//           columnName += columnIndex[i%26]
+//         }
+//         worksheet.getCell(columnName+'1').value = column
+//         i++
+//       })
+
+//       let filename = 'test.xlsx' //生成的檔名
+
+//       //檔案生成成功後執行的操作
+//       res.header('code', '200')
+//       res.attachment(filename)
+//       await workbook.xlsx.write(res)
+//       res.end()
+    
+//   } catch (err) {
+//     res.status(500)
+//     res.send(err.message)
+//   }
 // })
 
 router.post('/login', async (req, res) => {
