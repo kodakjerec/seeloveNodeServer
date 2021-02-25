@@ -239,6 +239,9 @@ router.post('/orderDetailNew', async (req, res) => {
       .input('Qty', sql.SmallInt, form.Qty)
       .input('ItemType', sql.TinyInt, form.ItemType)
       .input('Price', sql.Decimal, form.Price)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('orders_OrderDetailNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -267,6 +270,9 @@ router.post('/orderDetailEdit', async (req, res) => {
       .input('Qty', sql.SmallInt, form.Qty)
       .input('ItemType', sql.TinyInt, form.ItemType)
       .input('Price', sql.Decimal, form.Price)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('orders_OrderDetailEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -931,6 +937,7 @@ router.post('/anzaOrderUpdate', async (req, res) => {
       .input('ProductID', sql.VarChar, form.ProductID)
       .input('ModifyType', sql.NVarChar, form.ModifyType)
       .input('userID', sql.VarChar, loginUser.userID)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){

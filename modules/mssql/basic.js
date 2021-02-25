@@ -640,6 +640,9 @@ router.post('/projectDetailNew', async (req, res) => {
       .input('ProductID', sql.NVarChar, form.ProductID)
       .input('Price', sql.Decimal, form.Price)     
       .input('Qty', sql.SmallInt, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('basic_ProjectDetailNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -665,6 +668,9 @@ router.post('/projectDetailEdit', async (req, res) => {
       .input('ProductID', sql.NVarChar, form.ProductID)
       .input('Price', sql.Decimal, form.Price)     
       .input('Qty', sql.SmallInt, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('basic_ProjectDetailEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -962,8 +968,7 @@ router.post('/storageAddressBatchIns', async (req, res) => {
       .input('AvgQty', sql.Int, form.AvgQty)
       .input('Status', sql.VarChar, form.Status)
       .input('Memo', sql.NVarChar, form.Memo)
-      .input('RowStart', sql.TinyInt, form.RowStart)
-      .input('RowEnd', sql.TinyInt, form.RowEnd)
+      .input('RowStart', sql.VarChar, form.RowStart)
       .input('ColumnStart', sql.TinyInt, form.ColumnStart)
       .input('ColumnEnd', sql.TinyInt, form.ColumnEnd)
       .input('LocationStart', sql.TinyInt, form.LocationStart)

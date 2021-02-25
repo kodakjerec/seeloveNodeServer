@@ -47,7 +47,10 @@ app.use(function (req, res, next) {
     })
   } else {
     // 如果沒有token, 又是登入頁面來的, 就pass
-    if (req.originalUrl.indexOf('/login')>=0) {
+    const urlPass= ['/login','/images']
+    let result = urlPass.find(item=> { return req.originalUrl.indexOf(item)>=0 })
+
+    if ( urlPass.find(item=> { return req.originalUrl.indexOf(item)>=0 }) !== undefined ) {
       next()
     } else {
       res.status(401)
@@ -99,6 +102,7 @@ app.use('/orders', require('./modules/mssql/orders'))
 app.use('/reports', require('./modules/mssql/reports'))
 app.use('/signOff', require('./modules/mssql/signOff'))
 app.use('/stock', require('./modules/mssql/stock'))
+app.use('/map/images', require('./modules/mssql/mapImages'))
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address

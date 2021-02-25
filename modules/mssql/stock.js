@@ -207,6 +207,24 @@ router.post('/mapGet', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/mapGetImage', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+    .input('Building', sql.VarChar, req.body.Building)
+    .input('Floor', sql.VarChar, req.body.Floor)
+    .input('Area', sql.VarChar, req.body.Area)
+    .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('stock_MapGetImage')
+      
+    successResponse(res, {
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/mapUpdate', async (req, res) => {
   try {
     let form = req.body.form
