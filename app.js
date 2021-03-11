@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { loginUser, sql, poolPromise } = require('./modules/mssql/modules/config')
+const { loginUser, config, sql, poolPromise } = require('./modules/mssql/modules/config')
 const { userCheck } = require('./modules/mssql/modules/nedb')
 const { decrypt } =require('./modules/mssql/modules/crypto')
 const requestIp = require('request-ip')
@@ -25,7 +25,7 @@ app.disable('x-powered-by')
 app.use(function (req, res, next) {
   let token = req.headers['authorization']
   if (token) {
-    jwt.verify(token, 'seeLove_83799375', async function (err, decoded) {
+    jwt.verify(token, config.cryptKey, async function (err, decoded) {
       // 解碼失敗
       if (err) {
         const { name, message } = err
