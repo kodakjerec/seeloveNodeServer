@@ -248,6 +248,29 @@ router.post('/customerDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/customerSearch', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, form.keyword)
+      .input('Gender', sql.VarChar, form.Gender)
+      .input('BirthStart', sql.VarChar, form.BirthStart)
+      .input('BirthEnd', sql.VarChar, form.BirthEnd)
+      .input('BirthLunarStart', sql.VarChar, form.BirthLunarStart)
+      .input('BirthLunarEnd', sql.VarChar, form.BirthLunarEnd)
+      .input('LunarTime', sql.VarChar, form.LunarTime)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .execute('basic_CustomerSearch')
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Employee
 router.post('/employeesShow', async (req, res) => {
