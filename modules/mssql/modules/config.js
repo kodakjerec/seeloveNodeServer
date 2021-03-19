@@ -45,5 +45,5 @@ const jwtSign = function (UserID) {
 }
 
 module.exports = {
-  loginUser, sql, poolPromise, errorResponse, successResponse, jwtSign
+  loginUser, config, sql, poolPromise, errorResponse, successResponse, jwtSign
 }
