@@ -196,6 +196,10 @@ router.post('/mapGet', async (req, res) => {
     .input('Building', sql.VarChar, req.body.Building)
     .input('Floor', sql.VarChar, req.body.Floor)
     .input('Area', sql.VarChar, req.body.Area)
+    .input('Column', sql.VarChar, req.body.Column)
+    .input('Row', sql.VarChar, req.body.Row)
+    .input('Grid', sql.VarChar, req.body.Grid)
+    .input('StorageID', sql.VarChar, req.body.StorageID)
     .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_MapGet')
       
@@ -214,6 +218,10 @@ router.post('/mapGetImage', async (req, res) => {
     .input('Building', sql.VarChar, req.body.Building)
     .input('Floor', sql.VarChar, req.body.Floor)
     .input('Area', sql.VarChar, req.body.Area)
+    .input('Column', sql.VarChar, req.body.Column)
+    .input('Row', sql.VarChar, req.body.Row)
+    .input('Grid', sql.VarChar, req.body.Grid)
+    .input('StorageID', sql.VarChar, req.body.StorageID)
     .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_MapGetImage')
       
