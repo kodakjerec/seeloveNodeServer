@@ -906,6 +906,7 @@ router.post('/anzaOperate', async (req, res) => {
       .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
       .input('CustomerID', sql.VarChar, form.CustomerID)
       .input('StorageID', sql.VarChar, form.StorageID)
+      .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('RealDate', sql.Date, form.RealDate)
       .input('CompleteDate', sql.Date, form.CompleteDate)
       .input('userID', sql.VarChar, loginUser.userID)
@@ -931,13 +932,14 @@ router.post('/anzaOrderUpdate', async (req, res) => {
     const queryResult = await pool.request()
       .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
       .input('OrderID', sql.VarChar, form.OrderID)
-      .input('CustomerID', sql.VarChar, form.CustomerID)  
+      .input('CustomerID', sql.VarChar, form.CustomerID)
       .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
       .input('ProductID', sql.VarChar, form.ProductID)
       .input('ModifyType', sql.NVarChar, form.ModifyType)
       .input('userID', sql.VarChar, loginUser.userID)
       .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('PrepareDate', sql.Date, form.PrepareDate)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
