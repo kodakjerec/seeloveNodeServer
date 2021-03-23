@@ -310,6 +310,8 @@ router.post('/employeeNew', async (req, res) => {
       .input('EMail', sql.NVarChar, form.EMail)
       .input('ParentID', sql.NVarChar, form.ParentID)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('Depart', sql.VarChar, form.Depart)
+      .input('Office', sql.VarChar, form.Office)
       .execute('basic_EmployeeNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -346,6 +348,8 @@ router.post('/employeeEdit', async (req, res) => {
       .input('EMail', sql.NVarChar, form.EMail)
       .input('ParentID', sql.NVarChar, form.ParentID)
       .input('Memo', sql.NVarChar, form.Memo)
+      .input('Depart', sql.VarChar, form.Depart)
+      .input('Office', sql.VarChar, form.Office)
       .execute('basic_EmployeeEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
