@@ -145,12 +145,6 @@ router.post('/customerNew', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('NameEnglish', sql.NVarChar, form.NameEnglish)
-      .input('AgentID', sql.NVarChar, form.AgentID)
-      .input('AgentName', sql.NVarChar, form.AgentName)
-      .input('AgentCountry', sql.VarChar, form.AgentCountry)
-      .input('AgentCity', sql.VarChar, form.AgentCity)
-      .input('AgentPost', sql.VarChar, form.AgentPost)
-      .input('AgentAddress', sql.NVarChar, form.AgentAddress)     
       .input('TelHome', sql.NVarChar, form.TelHome)
       .input('TelMobile', sql.NVarChar, form.TelMobile)
       .input('Country', sql.VarChar, form.Country)
@@ -167,6 +161,7 @@ router.post('/customerNew', async (req, res) => {
       .input('BirthLunarDate', sql.Date, form.BirthLunarDate)
       .input('BirthLunarTime', sql.NVarChar, form.BirthLunarTime)
       .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -190,12 +185,6 @@ router.post('/customerEdit', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('NameEnglish', sql.NVarChar, form.NameEnglish)
-      .input('AgentID', sql.NVarChar, form.AgentID)
-      .input('AgentName', sql.NVarChar, form.AgentName)
-      .input('AgentCountry', sql.VarChar, form.AgentCountry)
-      .input('AgentCity', sql.VarChar, form.AgentCity)
-      .input('AgentPost', sql.VarChar, form.AgentPost)
-      .input('AgentAddress', sql.NVarChar, form.AgentAddress)     
       .input('TelHome', sql.NVarChar, form.TelHome)
       .input('TelMobile', sql.NVarChar, form.TelMobile)
       .input('Country', sql.VarChar, form.Country)
@@ -212,6 +201,7 @@ router.post('/customerEdit', async (req, res) => {
       .input('BirthLunarDate', sql.Date, form.BirthLunarDate)
       .input('BirthLunarTime', sql.NVarChar, form.BirthLunarTime)
       .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -312,6 +302,7 @@ router.post('/employeeNew', async (req, res) => {
       .input('Memo', sql.NVarChar, form.Memo)
       .input('Depart', sql.VarChar, form.Depart)
       .input('Office', sql.VarChar, form.Office)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_EmployeeNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -350,6 +341,7 @@ router.post('/employeeEdit', async (req, res) => {
       .input('Memo', sql.NVarChar, form.Memo)
       .input('Depart', sql.VarChar, form.Depart)
       .input('Office', sql.VarChar, form.Office)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_EmployeeEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
