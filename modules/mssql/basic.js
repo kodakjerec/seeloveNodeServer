@@ -1143,6 +1143,75 @@ router.post('/storageAddressUpload', upload.single('file') , async (req, res) =>
   }
 })
 
+// Bank Accounts
+router.post('/bankAccountShow', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .execute('basic_BankAccountShow')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/bankAccountUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .input('Seq', sql.VarChar, form.Seq)
+      .input('Account', sql.VarChar, form.Account)
+      .input('BankID', sql.VarChar, form.BankID)
+      .input('Branch', sql.VarChar, form.Branch)
+      .input('UserName', sql.VarChar, form.UserName)
+      .input('IsDefault', sql.VarChar, form.IsDefault)
+      .execute('basic_BankAccountUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/bankAccountDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .input('Seq', sql.VarChar, form.Seq)
+      .execute('basic_BankAccountDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 router.post('/checkValidate', async (req, res) => {
   try {
