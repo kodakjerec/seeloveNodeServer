@@ -699,6 +699,27 @@ router.post('/invoiceHeadInvalid', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/invoiceHeadDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('InvoiceID', sql.VarChar, form.InvoiceID)
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .execute('orders_InvoiceHeadDelete')
+
+    if (queryResult.recordset[0].code !== 200 ){
+      throw Error(queryResult.recordset[0].message)
+    }
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/invoiceFunctions', async (req, res) => {
   try {
     const pool = await poolPromise
