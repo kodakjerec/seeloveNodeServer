@@ -738,6 +738,60 @@ router.post('/projectDetailDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+// Project AnzaOrder Detail
+router.post('/projectAnzaOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ProjectID', sql.NVarChar, form.ProjectID)
+      .input('Seq', sql.NVarChar, form.Seq)
+      .input('ProductID', sql.NVarChar, form.ProductID)
+      .input('Price', sql.Decimal, form.Price)     
+      .input('Qty', sql.SmallInt, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
+      .execute('basic_ProjectAnzaOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/projectAnzaOrderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ProjectID', sql.NVarChar, form.ProjectID)
+      .input('Seq', sql.NVarChar, form.Seq)
+      .input('ProductID', sql.NVarChar, form.ProductID)
+      .input('Price', sql.Decimal, form.Price)     
+      .input('Qty', sql.SmallInt, form.Qty)
+      .execute('basic_ProjectAnzaOrderDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Project Performance Bonus
 router.post('/projectPBonusNew', async (req, res) => {
