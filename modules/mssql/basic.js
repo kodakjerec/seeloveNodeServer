@@ -388,7 +388,7 @@ router.post('/productsShow', async (req, res) => {
   try {
     const pool = await poolPromise
     const queryResult = await pool.request()
-      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('searchContent', sql.NVarChar, req.body.searchContent)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProductsShow')
       
