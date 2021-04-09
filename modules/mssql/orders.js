@@ -944,11 +944,8 @@ router.post('/anzaOrderUpdate', async (req, res) => {
       .input('CustomerID', sql.VarChar, form.CustomerID)
       .input('ScheduledDate', sql.Date, form.ScheduledDate)
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
-      .input('ProductID', sql.VarChar, form.ProductID)
       .input('ModifyType', sql.NVarChar, form.ModifyType)
       .input('userID', sql.VarChar, loginUser.userID)
-      .input('FromStorageID', sql.VarChar, form.FromStorageID)
-      .input('PrepareDate', sql.Date, form.PrepareDate)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
