@@ -3,10 +3,10 @@ const sql = require('mssql')
 const jwt = require('jsonwebtoken')
 
 const config = {
-  user: 'seelove',
-  password: 'Seelove83799375',
+  user: 'gl',
+  password: 'Gl83799375',
   server: '192.168.2.210', // You can use 'localhost\\instance' to connect to named instance
-  database: 'seelove100',
+  database: 'gl100bak',
   cryptKey: 'seeLove_83799375'
 }
 const loginUser = {
