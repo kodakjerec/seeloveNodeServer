@@ -946,6 +946,7 @@ router.post('/anzaOrderUpdate', async (req, res) => {
       .input('ExpirationDate', sql.Date, form.ExpirationDate)
       .input('ModifyType', sql.NVarChar, form.ModifyType)
       .input('userID', sql.VarChar, loginUser.userID)
+      .input('PrepareDate', sql.Date, form.PrepareDate)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -972,6 +973,37 @@ router.post('/anzaOrderShow2', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderShow2')
 
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// Anza Order Detail
+router.post('/anzaOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
+      .input('ProjectID', sql.VarChar, form.ProjectID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Price', sql.Decimal, form.Price)     
+      .input('Qty', sql.SmallInt, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
+      .execute('orders_AnzaOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
     successResponse(res, { 
       result: queryResult.recordset
     })
