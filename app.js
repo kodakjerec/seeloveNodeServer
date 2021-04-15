@@ -23,6 +23,7 @@ app.disable('x-powered-by')
 
 // 驗證token
 app.use(function (req, res, next) {
+
   let token = req.headers['authorization']
   if (token) {
     jwt.verify(token, config.cryptKey, async function (err, decoded) {
