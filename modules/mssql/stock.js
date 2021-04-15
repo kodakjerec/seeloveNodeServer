@@ -54,14 +54,7 @@ router.post('/inboundOrderDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('ID', sql.NVarChar, form.ID)
-    .input('OrderDate', sql.Date, form.OrderDate)
-    .input('Status', sql.VarChar, form.Status)
-    .input('CreateID', sql.VarChar, form.CreateID)
-    .input('Amount', sql.Decimal, form.Amount)
-    .input('Prefix', sql.VarChar, form.Prefix)
-    .input('Memo', sql.NVarChar, form.Memo)
-    .input('Supplier', sql.VarChar, form.Supplier)
+      .input('ID', sql.NVarChar, form.ID)
       .execute('stock_inboundOrderDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -112,14 +105,8 @@ router.post('/inboundOrderDetailDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('OrderID', sql.VarChar, form.OrderID)
-    .input('Seq', sql.TinyInt, form.Seq)
-    .input('ProductID', sql.VarChar, form.ProductID)
-    .input('Name', sql.NVarChar, form.Name)
-    .input('Qty', sql.Int, form.Qty)
-    .input('Cost', sql.Decimal, form.Cost)
-    .input('StorageID', sql.VarChar, form.StorageID)
-    .input('Purpose', sql.VarChar, form.Purpose)
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
       .execute('stock_inboundOrderDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -187,14 +174,7 @@ router.post('/outboundOrderDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('ID', sql.NVarChar, form.ID)
-    .input('OrderDate', sql.Date, form.OrderDate)
-    .input('Status', sql.VarChar, form.Status)
-    .input('CreateID', sql.VarChar, form.CreateID)
-    .input('Amount', sql.Decimal, form.Amount)
-    .input('Prefix', sql.VarChar, form.Prefix)
-    .input('Memo', sql.NVarChar, form.Memo)
-    .input('Supplier', sql.VarChar, form.Supplier)
+      .input('ID', sql.NVarChar, form.ID)
       .execute('stock_outboundOrderDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -245,14 +225,8 @@ router.post('/outboundOrderDetailDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('OrderID', sql.VarChar, form.OrderID)
-    .input('Seq', sql.TinyInt, form.Seq)
-    .input('ProductID', sql.VarChar, form.ProductID)
-    .input('Name', sql.NVarChar, form.Name)
-    .input('Qty', sql.Int, form.Qty)
-    .input('Cost', sql.Decimal, form.Cost)
-    .input('StorageID', sql.VarChar, form.StorageID)
-    .input('Purpose', sql.VarChar, form.Purpose)
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
       .execute('stock_outboundOrderDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
