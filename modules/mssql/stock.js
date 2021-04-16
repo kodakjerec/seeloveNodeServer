@@ -243,6 +243,126 @@ router.post('/outboundOrderDetailDelete', async (req, res) => {
   }
 })
 
+// processing
+router.post('/processingOrderShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('stock_ProcessingOrderShow')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('OrderDate', sql.Date, form.OrderDate)
+      .input('Status', sql.VarChar, form.Status)
+      .input('CreateID', sql.VarChar, form.CreateID)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('Prefix', sql.VarChar, form.Prefix)
+      .execute('stock_ProcessingOrderUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('stock_ProcessingOrderDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// processing Order Detail
+router.post('/processingOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('Type', sql.TinyInt, form.Type)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Name', sql.NVarChar, form.Name)
+      .input('Qty', sql.Int, form.Qty)
+      .input('StorageID', sql.VarChar, form.StorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
+      .input('SetQty', sql.SmallInt, form.SetQty)
+      .input('Set', sql.SmallInt, form.Set)
+      .execute('stock_ProcessingOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .execute('stock_ProcessingOrderDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 // Stock Now
 router.post('/stockNowShow', async (req, res) => {
   try {
