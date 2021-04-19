@@ -125,6 +125,7 @@ router.post('/orderInvalid', async (req, res) => {
     const queryResult = await pool.request()
       .input('ID', sql.NVarChar, form.ID)
       .input('userID', sql.VarChar, loginUser.userID)
+      .input('SalesReturnDate', sql.Date, form.SalesReturnDate)
       .execute('orders_OrderInvalid')
 
       if (queryResult.recordset[0].code !== 200 ){
