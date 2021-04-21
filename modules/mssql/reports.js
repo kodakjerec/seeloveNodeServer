@@ -77,7 +77,7 @@ router.post('/wintonInvoiceUpload', upload.single('file') , async (req, res) => 
             .input('Amount', sql.Decimal, row.getCell(45).value)
             .input('ReceivedDate', sql.Date, row.getCell(123).value)
             .input('InvoiceKind', sql.VarChar, row.getCell(3).value)
-            .input('Tax', sql.Decimal, taxKind)
+            .input('Tax', sql.VarChar, taxKind)
             .input('CarrierNumber', sql.VarChar, '')
             .input('Memo', sql.NVarChar, '')
             .input('InvoiceIDFirst', sql.VarChar, row.getCell(13).value)
