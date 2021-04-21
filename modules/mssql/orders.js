@@ -609,7 +609,7 @@ router.post('/invoiceShow', async (req, res) => {
     res.send(err.message)
   }
 })
-router.post('/invoiceHeadNew', async (req, res) => {
+router.post('/invoiceHeadUpdate', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
@@ -622,7 +622,7 @@ router.post('/invoiceHeadNew', async (req, res) => {
       .input('Amount', sql.Decimal, form.Amount)
       .input('ReceivedDate', sql.Date, form.ReceivedDate)
       .input('InvoiceKind', sql.VarChar, form.InvoiceKind)
-      .input('Tax', sql.Decimal, form.Tax)
+      .input('Tax', sql.VarChar, form.Tax)
       .input('CarrierNumber', sql.VarChar, form.CarrierNumber)
       .input('Memo', sql.NVarChar, form.Memo)
       .input('InvoiceIDFirst', sql.VarChar, form.InvoiceIDFirst)
@@ -630,41 +630,7 @@ router.post('/invoiceHeadNew', async (req, res) => {
       .input('CreateID', sql.VarChar, form.CreateID)
       .input('Status', sql.VarChar, form.Status)
       .input('SalesReturnDate', sql.Date, form.SalesReturnDate)
-      .execute('orders_InvoiceHeadNew')
-    if (queryResult.recordset[0].code !== 200 ){
-      throw Error(queryResult.recordset[0].message)
-    }
-
-    successResponse(res, { 
-      result: queryResult.recordset
-    })
-  } catch (err) {
-    res.status(500)
-    res.send(err.message)
-  }
-})
-router.post('/invoiceHeadEdit', async (req, res) => {
-  try {
-    let form = req.body.form
-    const pool = await poolPromise
-    const queryResult = await pool.request()
-      .input('InvoiceID', sql.VarChar, form.InvoiceID)
-      .input('InvoiceDate', sql.Date, form.InvoiceDate)
-      .input('OrderID', sql.VarChar, form.OrderID)
-      .input('Title', sql.NVarChar, form.Title)
-      .input('UniformNumber', sql.VarChar, form.UniformNumber)
-      .input('Amount', sql.Decimal, form.Amount)
-      .input('ReceivedDate', sql.Date, form.ReceivedDate)
-      .input('InvoiceKind', sql.VarChar, form.InvoiceKind)
-      .input('Tax', sql.Decimal, form.Tax)
-      .input('CarrierNumber', sql.VarChar, form.CarrierNumber)
-      .input('Memo', sql.NVarChar, form.Memo)
-      .input('InvoiceIDFirst', sql.VarChar, form.InvoiceIDFirst)
-      .input('RandomCode', sql.VarChar, form.RandomCode)
-      .input('CreateID', sql.VarChar, form.CreateID)
-      .input('Status', sql.VarChar, form.Status)
-      .input('SalesReturnDate', sql.Date, form.SalesReturnDate)
-      .execute('orders_InvoiceHeadEdit')
+      .execute('orders_InvoiceHeadUpdate')
 
     if (queryResult.recordset[0].code !== 200 ){
       throw Error(queryResult.recordset[0].message)
@@ -742,7 +708,7 @@ router.post('/invoiceFunctions', async (req, res) => {
 })
 
 // Invoice Detail
-router.post('/invoiceDetailNew', async (req, res) => {
+router.post('/invoiceDetailUpdate', async (req, res) => {
   try {
     let form = req.body.form
     const pool = await poolPromise
@@ -754,7 +720,7 @@ router.post('/invoiceDetailNew', async (req, res) => {
       .input('Qty', sql.Decimal, form.Qty)
       .input('Amount', sql.Decimal, form.Amount)
       .input('Tax', sql.Decimal, form.Tax)
-      .execute('orders_InvoiceDetailNew')
+      .execute('orders_InvoiceDetailUpdate')
 
     if (queryResult.recordset[0].code !== 200 ){
       throw Error(queryResult.recordset[0].message)
