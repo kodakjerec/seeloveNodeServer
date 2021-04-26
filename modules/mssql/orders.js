@@ -610,7 +610,7 @@ router.post('/invoiceHeadUpdate', async (req, res) => {
       .input('Amount', sql.Decimal, form.Amount)
       .input('ReceivedDate', sql.Date, form.ReceivedDate)
       .input('InvoiceKind', sql.VarChar, form.InvoiceKind)
-      .input('Tax', sql.VarChar, form.Tax)
+      .input('Tax', sql.Decimal, form.Tax)
       .input('CarrierNumber', sql.VarChar, form.CarrierNumber)
       .input('Memo', sql.NVarChar, form.Memo)
       .input('InvoiceIDFirst', sql.VarChar, form.InvoiceIDFirst)
