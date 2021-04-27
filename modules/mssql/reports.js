@@ -49,17 +49,7 @@ router.post('/wintonInvoiceUpload', upload.single('file') , async (req, res) => 
 
         // 組合發票日期
         let invoiceDate = (parseInt(row.getCell(39).value)+1911).toString()+'/'+row.getCell(40).value+'/'+row.getCell(41).value
-        // 發票稅額方式
-        let taxKind = '1'
-        if (row.getCell(46).value === 'v') {
-          taxKind = '1'
-        }
-        else if (row.getCell(47).value === 'v') {
-          taxKind = '2'
-        }
-        else if (row.getCell(48).value === 'v') {
-          taxKind = '3'
-        }
+
         // 新增 or 作廢
         let deleteInvoice = false
         if (row.getCell(97).value !== 'N') {
@@ -77,7 +67,7 @@ router.post('/wintonInvoiceUpload', upload.single('file') , async (req, res) => 
             .input('Amount', sql.Decimal, row.getCell(45).value)
             .input('ReceivedDate', sql.Date, row.getCell(123).value)
             .input('InvoiceKind', sql.VarChar, row.getCell(3).value)
-            .input('Tax', sql.VarChar, taxKind)
+            .input('Tax', sql.VarChar, row.getCell(44).value)
             .input('CarrierNumber', sql.VarChar, '')
             .input('Memo', sql.NVarChar, '')
             .input('InvoiceIDFirst', sql.VarChar, row.getCell(13).value)
