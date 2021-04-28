@@ -1031,6 +1031,23 @@ router.post('/installmentDetailDelete', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/installmentAlarm', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .input('StartDate', sql.Date, req.body.StartDate)
+      .execute('orders_InstallmentAlarm')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Others
 router.post('/getDropdownList', async (req, res) => {
