@@ -364,6 +364,20 @@ router.post('/processingOrderDetailDelete', async (req, res) => {
 })
 
 // Stock Now
+router.post('/alarm', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .execute('stock_Alarm')
+
+    successResponse(res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/stockNowShow', async (req, res) => {
   try {
     const pool = await poolPromise
