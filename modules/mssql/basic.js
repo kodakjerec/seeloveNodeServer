@@ -209,8 +209,8 @@ router.post('/customerEdit', async (req, res) => {
       .input('refKind', sql.VarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('userID', sql.VarChar, loginUser.userID)
-      .input('BirthLunarDate', sql.Date, form.BirthLunarDate)
-      .input('BirthLunarTime', sql.NVarChar, form.BirthLunarTime)
+      .input('BirthLunarDate', sql.VarChar, form.BirthLunarDate)
+      .input('BirthLunarTime', sql.VarChar, form.BirthLunarTime)
       .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
       .execute('basic_CustomerEdit')
 
