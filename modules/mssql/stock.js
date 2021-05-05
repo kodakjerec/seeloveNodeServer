@@ -581,10 +581,11 @@ router.post('/transportOrderDetailUpdate', async (req, res) => {
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Seq', sql.TinyInt, form.Seq)
       .input('ProductID', sql.VarChar, form.ProductID)
-      .input('Name', sql.NVarChar, form.Name)
       .input('Qty', sql.Int, form.Qty)
       .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('FromPurpose', sql.VarChar, form.FromPurpose)
       .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('ToPurpose', sql.VarChar, form.ToPurpose)
       .execute('stock_TransportOrderDetailUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
