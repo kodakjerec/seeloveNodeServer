@@ -22,8 +22,14 @@ app.use(cors(corsOptions))
 app.disable('x-powered-by')
 
 // 驗證token
+// 解密
 app.use(function (req, res, next) {
+  // 解密
+  if(req.headers['encrypt']) {
+    req.body = JSON.parse(decrypt(req.body.c))
+  } 
 
+  // token
   let token = req.headers['authorization']
   if (token) {
     jwt.verify(token, config.cryptKey, async function (err, decoded) {
@@ -49,7 +55,7 @@ app.use(function (req, res, next) {
   } else {
     // 如果沒有token, 又是登入頁面來的, 就pass
     const urlPass= ['/login','/images']
-    let result = urlPass.find(item=> { return req.originalUrl.indexOf(item)>=0 })
+    // let result = urlPass.find(item=> { return req.originalUrl.indexOf(item)>=0 })
 
     if ( urlPass.find(item=> { return req.originalUrl.indexOf(item)>=0 }) !== undefined ) {
       next()
@@ -74,11 +80,8 @@ app.use(async function (req, res, next) {
   if (req.decoded){
     form.UserID = req.decoded.UserID
     form.Token = req.headers['authorization']
-  } else {
-    if(req.body.UserID){
-      form.UserID = decrypt(req.body.UserID)
-    }
   }
+  
   const pool = await poolPromise
   pool.request()
     .input('UserID', sql.NVarChar, form.UserID)
