@@ -12,7 +12,7 @@ router.post('/getUserProg', async (req, res) => {
       .input('UserID', sql.NVarChar, UserID)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetUserProg')
-    successResponse(res, { 
+    successResponse(req, res, { 
       userProg: queryResult.recordset
     })
   } catch (err) {
@@ -37,7 +37,7 @@ router.post('/userNew', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -62,7 +62,7 @@ router.post('/userEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -84,7 +84,7 @@ router.post('/userUpdatePassword', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -117,7 +117,7 @@ router.post('/groupProgListNew', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -139,7 +139,7 @@ router.post('/groupProgListDel', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -171,7 +171,7 @@ router.post('/groupProgListEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -192,7 +192,7 @@ router.post('/groupNew', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -213,7 +213,7 @@ router.post('/groupEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -243,7 +243,7 @@ router.post('/settingsNew', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -272,7 +272,7 @@ router.post('/settingsEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -294,7 +294,7 @@ router.post('/settingsDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -311,7 +311,7 @@ router.post('/announcementShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_AnnouncementShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -337,7 +337,7 @@ router.post('/announcementNew', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -363,7 +363,7 @@ router.post('/announcementEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -389,7 +389,7 @@ router.post('/announcementDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -407,7 +407,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetObject')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -424,7 +424,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('settings_GetDropdownList')
 
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {

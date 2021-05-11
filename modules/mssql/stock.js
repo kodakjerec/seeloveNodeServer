@@ -13,7 +13,7 @@ router.post('/inboundOrderShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_inboundOrderShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -41,7 +41,7 @@ router.post('/inboundOrderUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -62,7 +62,7 @@ router.post('/inboundOrderDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -92,7 +92,7 @@ router.post('/inboundOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -114,7 +114,7 @@ router.post('/inboundOrderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -133,7 +133,7 @@ router.post('/outboundOrderShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_outboundOrderShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -161,7 +161,7 @@ router.post('/outboundOrderUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -182,7 +182,7 @@ router.post('/outboundOrderDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -212,7 +212,7 @@ router.post('/outboundOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -234,7 +234,7 @@ router.post('/outboundOrderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -253,7 +253,7 @@ router.post('/processingOrderShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_ProcessingOrderShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -279,7 +279,7 @@ router.post('/processingOrderUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -300,7 +300,7 @@ router.post('/processingOrderDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -332,7 +332,7 @@ router.post('/processingOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -354,7 +354,7 @@ router.post('/processingOrderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -370,7 +370,7 @@ router.post('/alarm', async (req, res) => {
     const queryResult = await pool.request()
       .execute('stock_Alarm')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -387,7 +387,7 @@ router.post('/stockNowShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_StockNowShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -406,7 +406,7 @@ router.post('/findStorageID', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_FindStorageID')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -425,7 +425,7 @@ router.post('/checkValidate', async (req, res) => {
     .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_CheckValidate')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -447,7 +447,7 @@ router.post('/mapGet', async (req, res) => {
     .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_MapGet')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -469,7 +469,7 @@ router.post('/mapGetImage', async (req, res) => {
     .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_MapGetImage')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -497,7 +497,7 @@ router.post('/mapUpdate', async (req, res) => {
       return
     }
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -516,7 +516,7 @@ router.post('/transportOrderShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('stock_TransportOrderShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -542,7 +542,7 @@ router.post('/transportOrderUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -563,7 +563,7 @@ router.post('/transportOrderDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -594,7 +594,7 @@ router.post('/transportOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -616,7 +616,7 @@ router.post('/transportOrderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -634,7 +634,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_GetDropdownList')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -651,7 +651,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_GetObject')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {

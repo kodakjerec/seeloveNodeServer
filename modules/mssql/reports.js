@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 router.post('/ssrsReports', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -141,7 +141,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('reports_GetDropdownList')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {

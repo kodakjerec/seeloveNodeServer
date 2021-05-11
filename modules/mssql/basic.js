@@ -15,7 +15,7 @@ router.post('/companiesShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CompaniesShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -53,7 +53,7 @@ router.post('/companyNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -91,7 +91,7 @@ router.post('/companyEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -112,7 +112,7 @@ router.post('/companyDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -129,7 +129,7 @@ router.post('/customersShow', async (req, res) => {
       .input('keyword', sql.NVarChar, req.body.keyword)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CustomersShow')
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -169,7 +169,7 @@ router.post('/customerNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -209,7 +209,7 @@ router.post('/customerEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -230,7 +230,7 @@ router.post('/customerDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -253,7 +253,7 @@ router.post('/customerSearch', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_CustomerSearch')
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -271,7 +271,7 @@ router.post('/employeesShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_EmployeesShow')
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -310,7 +310,7 @@ router.post('/employeeNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -349,7 +349,7 @@ router.post('/employeeEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -370,7 +370,7 @@ router.post('/employeeDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -388,7 +388,7 @@ router.post('/productsShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProductsShow')
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -421,7 +421,7 @@ router.post('/productNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -454,7 +454,7 @@ router.post('/productEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -475,7 +475,7 @@ router.post('/productDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -502,7 +502,7 @@ router.post('/productBOMNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -527,7 +527,7 @@ router.post('/productBOMEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -551,7 +551,7 @@ router.post('/productBOMDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -569,7 +569,7 @@ router.post('/projectsShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_ProjectsShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -596,7 +596,7 @@ router.post('/projectNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -622,7 +622,7 @@ router.post('/projectEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -643,7 +643,7 @@ router.post('/projectDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -673,7 +673,7 @@ router.post('/projectDetailNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -701,7 +701,7 @@ router.post('/projectDetailEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -726,7 +726,7 @@ router.post('/projectDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -755,7 +755,7 @@ router.post('/projectAnzaOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -780,7 +780,7 @@ router.post('/projectAnzaOrderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -806,7 +806,7 @@ router.post('/projectPBonusNew', async (req, res) => {
         return
       }
            
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -830,7 +830,7 @@ router.post('/projectPBonusEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -854,7 +854,7 @@ router.post('/projectPBonusDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -880,7 +880,7 @@ router.post('/projectSuperBonusNew', async (req, res) => {
         return
       }
           
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -904,7 +904,7 @@ router.post('/projectSuperBonusEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -928,7 +928,7 @@ router.post('/projectSuperBonusDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -954,7 +954,7 @@ router.post('/projectFunctionsUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -979,7 +979,7 @@ router.post('/productFunctionsUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1020,7 +1020,7 @@ router.post('/storageAddressUpdate', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1061,7 +1061,7 @@ router.post('/storageAddressBatchIns', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1082,7 +1082,7 @@ router.post('/storageAddressDelete', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1099,7 +1099,7 @@ router.post('/storageAddressShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_StorageAddressShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1190,7 +1190,7 @@ router.post('/storageAddressUpload', upload.single('file') , async (req, res) =>
         return
       }
     })
-    successResponse(res,{
+    successResponse(req, res,{
       result: {
         successCount: successCount,
         failCount: failCount
@@ -1281,7 +1281,7 @@ router.post('/checkValidate', async (req, res) => {
       .input('ID', sql.VarChar, req.body.ID)
       .execute('basic_CheckValidate')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1298,7 +1298,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetDropdownList')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1315,7 +1315,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('basic_GetObject')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {

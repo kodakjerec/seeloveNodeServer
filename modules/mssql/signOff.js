@@ -18,7 +18,7 @@ router.post('/assign', async (req, res) => {
       .input('Memo', sql.NVarChar, form.Memo)
       .execute('signOff_Assign')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -42,7 +42,7 @@ router.post('/permissionNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -66,7 +66,7 @@ router.post('/permissionEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -88,7 +88,7 @@ router.post('/permissionDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -105,7 +105,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('signOff_GetObject')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
