@@ -54,14 +54,7 @@ router.post('/inboundOrderDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('ID', sql.NVarChar, form.ID)
-    .input('OrderDate', sql.Date, form.OrderDate)
-    .input('Status', sql.VarChar, form.Status)
-    .input('CreateID', sql.VarChar, form.CreateID)
-    .input('Amount', sql.Decimal, form.Amount)
-    .input('Prefix', sql.VarChar, form.Prefix)
-    .input('Memo', sql.NVarChar, form.Memo)
-    .input('Supplier', sql.VarChar, form.Supplier)
+      .input('ID', sql.NVarChar, form.ID)
       .execute('stock_inboundOrderDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -91,6 +84,7 @@ router.post('/inboundOrderDetailUpdate', async (req, res) => {
       .input('Qty', sql.Int, form.Qty)
       .input('Cost', sql.Decimal, form.Cost)
       .input('StorageID', sql.VarChar, form.StorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('stock_inboundOrderDetailUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -111,13 +105,8 @@ router.post('/inboundOrderDetailDelete', async (req, res) => {
     let form = req.body.form
     const pool = await poolPromise
     const queryResult = await pool.request()
-    .input('OrderID', sql.VarChar, form.OrderID)
-    .input('Seq', sql.TinyInt, form.Seq)
-    .input('ProductID', sql.VarChar, form.ProductID)
-    .input('Name', sql.NVarChar, form.Name)
-    .input('Qty', sql.Int, form.Qty)
-    .input('Cost', sql.Decimal, form.Cost)
-    .input('StorageID', sql.VarChar, form.StorageID)
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
       .execute('stock_inboundOrderDetailDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -134,7 +123,261 @@ router.post('/inboundOrderDetailDelete', async (req, res) => {
   }
 })
 
+// outbound
+router.post('/outboundOrderShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('stock_outboundOrderShow')
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/outboundOrderUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('OrderDate', sql.Date, form.OrderDate)
+      .input('Status', sql.VarChar, form.Status)
+      .input('CreateID', sql.VarChar, form.CreateID)
+      .input('Amount', sql.Decimal, form.Amount)
+      .input('Prefix', sql.VarChar, form.Prefix)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('Supplier', sql.VarChar, form.Supplier)
+      .execute('stock_outboundOrderUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/outboundOrderDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('stock_outboundOrderDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// outbound Order Detail
+router.post('/outboundOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Name', sql.NVarChar, form.Name)
+      .input('Qty', sql.Int, form.Qty)
+      .input('Cost', sql.Decimal, form.Cost)
+      .input('StorageID', sql.VarChar, form.StorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
+      .execute('stock_outboundOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/outboundOrderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .execute('stock_outboundOrderDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// processing
+router.post('/processingOrderShow', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('keyword', sql.NVarChar, req.body.keyword)
+      .input('locale', sql.VarChar, req.headers['clientlocale'])
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('stock_ProcessingOrderShow')
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('OrderDate', sql.Date, form.OrderDate)
+      .input('Status', sql.VarChar, form.Status)
+      .input('CreateID', sql.VarChar, form.CreateID)
+      .input('Memo', sql.NVarChar, form.Memo)
+      .input('Prefix', sql.VarChar, form.Prefix)
+      .execute('stock_ProcessingOrderUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .execute('stock_ProcessingOrderDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
+// processing Order Detail
+router.post('/processingOrderDetailUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('Type', sql.TinyInt, form.Type)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Name', sql.NVarChar, form.Name)
+      .input('Qty', sql.Int, form.Qty)
+      .input('StorageID', sql.VarChar, form.StorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
+      .input('SetQty', sql.SmallInt, form.SetQty)
+      .input('Set', sql.SmallInt, form.Set)
+      .execute('stock_ProcessingOrderDetailUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/processingOrderDetailDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .execute('stock_ProcessingOrderDetailDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+
 // Stock Now
+router.post('/alarm', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .execute('stock_Alarm')
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 router.post('/stockNowShow', async (req, res) => {
   try {
     const pool = await poolPromise
@@ -159,6 +402,7 @@ router.post('/findStorageID', async (req, res) => {
       .input('ProductID', sql.VarChar, req.body.ProductID)
       .input('Purpose', sql.VarChar, req.body.Purpose)
       .input('Qty', sql.Int, req.body.Qty)
+      .input('StorageID', sql.VarChar, req.body.StorageID)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_FindStorageID')
       
@@ -340,7 +584,9 @@ router.post('/transportOrderDetailUpdate', async (req, res) => {
       .input('Name', sql.NVarChar, form.Name)
       .input('Qty', sql.Int, form.Qty)
       .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('FromPurpose', sql.VarChar, form.FromPurpose)
       .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('ToPurpose', sql.VarChar, form.ToPurpose)
       .execute('stock_TransportOrderDetailUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){

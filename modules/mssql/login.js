@@ -63,10 +63,11 @@ router.post('/login', async (req, res) => {
       .input('Password', sql.NVarChar, Password)
       .execute('login')
 
-    if (result.recordset[0]['code'] === 200){
+    if (result.recordset[0]['message'] === ''){
       token = jwtSign(UserID)
     } else {
-      res.status(401)
+      errorResponse(res, result.recordset[0])
+      return
     }
 
     userInsert(UserID, token)

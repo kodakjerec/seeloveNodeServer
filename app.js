@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
     req.body = JSON.parse(decrypt(req.body.c))
   } 
 
-  // toekn
+  // token
   let token = req.headers['authorization']
   if (token) {
     jwt.verify(token, config.cryptKey, async function (err, decoded) {
@@ -81,7 +81,7 @@ app.use(async function (req, res, next) {
     form.UserID = req.decoded.UserID
     form.Token = req.headers['authorization']
   }
-
+  
   const pool = await poolPromise
   pool.request()
     .input('UserID', sql.NVarChar, form.UserID)
