@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
 
     userInsert(UserID, token)
     
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: result.recordset,
       token: token
     })
@@ -89,7 +89,7 @@ router.post('/logout', async (req, res) => {
     
     userRemove(UserID)
 
-    successResponse(res, {})
+    successResponse(req, res, {})
 })
 router.post('/getMenu', async (req, res) => {
   try {
@@ -114,7 +114,7 @@ router.post('/getMenu', async (req, res) => {
       })
     })
 
-    successResponse(res, result)
+    successResponse(req, res, result)
   } catch (err) {
     res.status(500)
     res.send(err.message)
@@ -126,7 +126,7 @@ router.post('/version', async (req, res) => {
     const queryResult = await pool.request()
       .execute('login_Version')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -149,7 +149,7 @@ router.post('/checkPwd', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {

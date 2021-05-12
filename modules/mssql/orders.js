@@ -9,7 +9,7 @@ router.post('/ordersShowGroup', async (req, res) => {
     const queryResult = await pool.request()
       .execute('orders_OrdersShowGroup')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: JSON.parse(queryResult.recordset[0].filterSettings)[0]
     })
   } catch (err) {
@@ -28,7 +28,7 @@ router.post('/ordersShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_OrdersShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -59,7 +59,7 @@ router.post('/orderNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -89,7 +89,7 @@ router.post('/orderEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -110,7 +110,7 @@ router.post('/orderDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -132,7 +132,7 @@ router.post('/orderInvalid', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -175,7 +175,7 @@ router.post('/orderCustomerNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -216,7 +216,7 @@ router.post('/orderCustomerEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -249,7 +249,7 @@ router.post('/orderDetailNew', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -280,7 +280,7 @@ router.post('/orderDetailEdit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -302,7 +302,7 @@ router.post('/orderDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -321,7 +321,7 @@ router.post('/certificate1Show', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_Certificate1Show')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -345,7 +345,7 @@ router.post('/orderCertificate1New', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -370,7 +370,7 @@ router.post('/orderCertificate1Edit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -392,7 +392,7 @@ router.post('/orderCertificate1Delete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -411,7 +411,7 @@ router.post('/certificate2Show', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_Certificate2Show')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -433,7 +433,7 @@ router.post('/orderCertificate2New', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -457,7 +457,7 @@ router.post('/orderCertificate2Edit', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -479,7 +479,7 @@ router.post('/orderCertificate2Delete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -512,7 +512,7 @@ router.post('/collectionRecordsNew', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -543,7 +543,7 @@ router.post('/collectionRecordsEdit', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -564,7 +564,7 @@ router.post('/collectionRecordsDelete', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -583,7 +583,7 @@ router.post('/collectionRecordsFunctions', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_CollectionRecordsFunctions')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -601,7 +601,7 @@ router.post('/invoiceShow', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_InvoiceShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -635,7 +635,7 @@ router.post('/invoiceHeadNew', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -670,7 +670,7 @@ router.post('/invoiceHeadEdit', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -691,7 +691,7 @@ router.post('/invoiceHeadInvalid', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -710,7 +710,7 @@ router.post('/invoiceFunctions', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_InvoiceFunctions')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -738,7 +738,7 @@ router.post('/invoiceDetailNew', async (req, res) => {
       throw Error(queryResult.recordset[0].message)
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -763,7 +763,7 @@ router.post('/orderFunctionsUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -793,7 +793,7 @@ router.post('/orderDetailFunctionsUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -817,7 +817,7 @@ router.post('/orderDetailFunctionsDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -839,7 +839,7 @@ router.post('/fKOrdersShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_FKOrdersShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -856,7 +856,7 @@ router.post('/anzaShowGroup', async (req, res) => {
     const queryResult = await pool.request()
       .execute('orders_AnzaShowGroup')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: JSON.parse(queryResult.recordset[0].filterSettings)[0]
     })
   } catch (err) {
@@ -872,7 +872,7 @@ router.post('/anzaAlarm', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaAlarm')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -889,7 +889,7 @@ router.post('/anzaOrderShow', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -916,7 +916,7 @@ router.post('/anzaOperate', async (req, res) => {
       return
     }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -945,7 +945,7 @@ router.post('/anzaOrderUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -964,7 +964,7 @@ router.post('/anzaOrderShow2', async (req, res) => {
       .input('userID', sql.VarChar, loginUser.userID)
       .execute('orders_AnzaOrderShow2')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -994,7 +994,7 @@ router.post('/installmentDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1016,7 +1016,7 @@ router.post('/installmentDetailDelete', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1035,7 +1035,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_GetDropdownList')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1052,7 +1052,7 @@ router.post('/getObject', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('orders_GetObject')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {

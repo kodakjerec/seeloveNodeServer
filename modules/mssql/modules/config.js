@@ -1,6 +1,7 @@
 const sql = require('mssql')
 // jwt
 const jwt = require('jsonwebtoken')
+const { encrypt } =require('./crypto')
 
 const config = {
   user: 'seelove',
@@ -29,7 +30,12 @@ const errorResponse = function (response, error) {
 }
 
 // 成功回應
-const successResponse = function (response, result) {
+const successResponse = function (request, response, result) {
+  // 加密
+  if(request.headers['encrypt']) {
+    result = encrypt(JSON.stringify(result))
+  } 
+
   response.header('code', '200')
   response.json(result)
 }

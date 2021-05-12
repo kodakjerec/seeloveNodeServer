@@ -4,7 +4,7 @@ const { sql, poolPromise, successResponse } = require('./modules/config')
 
 router.post('/employeesToExcel', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
 
   } catch (err) {
     res.status(500)
@@ -13,7 +13,7 @@ router.post('/employeesToExcel', async (req, res) => {
 })
 router.post('/certificate1ToExcel', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
 
   } catch (err) {
     res.status(500)
@@ -22,7 +22,7 @@ router.post('/certificate1ToExcel', async (req, res) => {
 })
 router.post('/certificate2ToExcel', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
 
   } catch (err) {
     res.status(500)
@@ -31,7 +31,7 @@ router.post('/certificate2ToExcel', async (req, res) => {
 })
 router.post('/bonus1ToExcel', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -40,7 +40,7 @@ router.post('/bonus1ToExcel', async (req, res) => {
 })
 router.post('/bonus2ToExcel', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -49,7 +49,7 @@ router.post('/bonus2ToExcel', async (req, res) => {
 })
 router.post('/fKOrderPrint', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -58,7 +58,7 @@ router.post('/fKOrderPrint', async (req, res) => {
 })
 router.post('/fKOrderRpt', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -67,7 +67,7 @@ router.post('/fKOrderRpt', async (req, res) => {
 })
 router.post('/anzaReportTotal', async (req, res) => {
   try {
-    successResponse(res, {})
+    successResponse(req, res, {})
     
   } catch (err) {
     res.status(500)
@@ -84,7 +84,7 @@ router.post('/getDropdownList', async (req, res) => {
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('reports_GetDropdownList')
       
-    successResponse(res, {
+    successResponse(req, res, {
       result: queryResult.recordset
     })
   } catch (err) {
