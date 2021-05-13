@@ -145,12 +145,6 @@ router.post('/customerNew', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('NameEnglish', sql.NVarChar, form.NameEnglish)
-      .input('AgentID', sql.NVarChar, form.AgentID)
-      .input('AgentName', sql.NVarChar, form.AgentName)
-      .input('AgentCountry', sql.VarChar, form.AgentCountry)
-      .input('AgentCity', sql.VarChar, form.AgentCity)
-      .input('AgentPost', sql.VarChar, form.AgentPost)
-      .input('AgentAddress', sql.NVarChar, form.AgentAddress)     
       .input('TelHome', sql.NVarChar, form.TelHome)
       .input('TelMobile', sql.NVarChar, form.TelMobile)
       .input('Country', sql.VarChar, form.Country)
@@ -164,6 +158,10 @@ router.post('/customerNew', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('userID', sql.VarChar, loginUser.userID)
+      .input('BirthLunarDate', sql.Date, form.BirthLunarDate)
+      .input('BirthLunarTime', sql.NVarChar, form.BirthLunarTime)
+      .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -187,12 +185,6 @@ router.post('/customerEdit', async (req, res) => {
       .input('ID', sql.NVarChar, form.ID)
       .input('Name', sql.NVarChar, form.Name)
       .input('NameEnglish', sql.NVarChar, form.NameEnglish)
-      .input('AgentID', sql.NVarChar, form.AgentID)
-      .input('AgentName', sql.NVarChar, form.AgentName)
-      .input('AgentCountry', sql.VarChar, form.AgentCountry)
-      .input('AgentCity', sql.VarChar, form.AgentCity)
-      .input('AgentPost', sql.VarChar, form.AgentPost)
-      .input('AgentAddress', sql.NVarChar, form.AgentAddress)     
       .input('TelHome', sql.NVarChar, form.TelHome)
       .input('TelMobile', sql.NVarChar, form.TelMobile)
       .input('Country', sql.VarChar, form.Country)
@@ -209,6 +201,7 @@ router.post('/customerEdit', async (req, res) => {
       .input('BirthLunarDate', sql.VarChar, form.BirthLunarDate)
       .input('BirthLunarTime', sql.VarChar, form.BirthLunarTime)
       .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
+      .input('UniqueNumber', sql.VarChar, form.UniqueNumber)
       .execute('basic_CustomerEdit')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -1198,6 +1191,75 @@ router.post('/storageAddressUpload', upload.single('file') , async (req, res) =>
   }
 })
 
+// Bank Accounts
+router.post('/bankAccountShow', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .execute('basic_BankAccountShow')
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/bankAccountUpdate', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .input('Seq', sql.VarChar, form.Seq)
+      .input('Account', sql.VarChar, form.Account)
+      .input('BankID', sql.VarChar, form.BankID)
+      .input('Branch', sql.NVarChar, form.Branch)
+      .input('UserName', sql.NVarChar, form.UserName)
+      .input('IsDefault', sql.VarChar, form.IsDefault)
+      .execute('basic_BankAccountUpdate')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/bankAccountDelete', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('FromType', sql.VarChar, form.FromType)
+      .input('FromID', sql.VarChar, form.FromID)
+      .input('Seq', sql.VarChar, form.Seq)
+      .execute('basic_BankAccountDelete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 router.post('/checkValidate', async (req, res) => {
   try {
