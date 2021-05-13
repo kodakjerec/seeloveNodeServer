@@ -164,9 +164,6 @@ router.post('/customerNew', async (req, res) => {
       .input('refKind', sql.NVarChar, form.refKind)
       .input('Referrer', sql.NVarChar, form.Referrer)
       .input('userID', sql.VarChar, loginUser.userID)
-      .input('BirthLunarDate', sql.Date, form.BirthLunarDate)
-      .input('BirthLunarTime', sql.NVarChar, form.BirthLunarTime)
-      .input('BirthLunarLeap', sql.TinyInt, form.BirthLunarLeap)
       .execute('basic_CustomerNew')
 
       if (queryResult.recordset[0].code !== 200 ){

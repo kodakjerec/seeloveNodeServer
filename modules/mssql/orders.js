@@ -771,7 +771,9 @@ router.post('/orderDetailFunctionsUpdate', async (req, res) => {
       .input('Function', sql.VarChar, form.Function)
       .input('Seq', sql.TinyInt, form.Seq)
       .input('Value1', sql.VarChar, form.Value1)
-      .input('Value2', sql.VarChar, form.Value2)  
+      .input('Value2', sql.VarChar, form.Value2)
+      .input('Value3', sql.VarChar, form.Value3)
+      .input('Value4', sql.VarChar, form.Value4)
       .execute('orders_OrderDetailFunctionsUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
@@ -796,8 +798,6 @@ router.post('/orderDetailFunctionsDelete', async (req, res) => {
       .input('DetailSeq', sql.TinyInt, form.DetailSeq)  
       .input('Function', sql.VarChar, form.Function)
       .input('Seq', sql.TinyInt, form.Seq)
-      .input('Value1', sql.VarChar, form.Value1)
-      .input('Value2', sql.VarChar, form.Value2)
       .execute('orders_OrderDetailFunctionsDelete')
 
       if (queryResult.recordset[0].code !== 200 ){
