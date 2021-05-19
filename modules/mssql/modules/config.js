@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 const { encrypt } =require('./crypto')
 
 const config = {
-  user: 'gl',
-  password: 'Gl83799375',
+  user: 'seelove',
+  password: 'Seelove83799375',
   server: '192.168.2.210', // You can use 'localhost\\instance' to connect to named instance
   database: 'gl100',
   cryptKey: 'seeLove_83799375'

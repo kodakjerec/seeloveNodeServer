@@ -1213,7 +1213,7 @@ router.post('/bankAccountShow', async (req, res) => {
       .input('FromID', sql.VarChar, form.FromID)
       .execute('basic_BankAccountShow')
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1241,7 +1241,7 @@ router.post('/bankAccountUpdate', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
@@ -1264,7 +1264,7 @@ router.post('/bankAccountDelete', async (req, res) => {
         return
       }
 
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {
