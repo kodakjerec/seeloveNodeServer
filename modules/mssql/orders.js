@@ -971,7 +971,7 @@ router.post('/anzaOrderDetailUpdate', async (req, res) => {
         return
       }
       
-    successResponse(res, { 
+    successResponse(req, res, { 
       result: queryResult.recordset
     })
   } catch (err) {

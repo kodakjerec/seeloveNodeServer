@@ -119,7 +119,7 @@ router.post('/wintonInvoiceUpload', upload.single('file') , async (req, res) => 
         return
       }
     })
-    successResponse(res,{
+    successResponse(req, res,{
       result: {
         successCount: successCount,
         failCount: failCount
