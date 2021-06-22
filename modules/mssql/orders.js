@@ -140,6 +140,28 @@ router.post('/orderInvalid', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/orderTransfer', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_OrderTransfer')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Order Customer
 router.post('/orderCustomerNew', async (req, res) => {
