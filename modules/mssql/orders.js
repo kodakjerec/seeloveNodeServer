@@ -140,6 +140,28 @@ router.post('/orderInvalid', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/orderTransfer', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('ID', sql.NVarChar, form.ID)
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_OrderTransfer')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Order Customer
 router.post('/orderCustomerNew', async (req, res) => {
@@ -374,6 +396,28 @@ router.post('/orderCertificate1Delete', async (req, res) => {
       .input('OrderID', sql.VarChar, form.OrderID)
       .input('Certificate1', sql.VarChar, form.Certificate1)
       .execute('orders_OrderCertificate1Delete')
+
+      if (queryResult.recordset[0].code !== 200 ){
+        errorResponse(res, queryResult.recordset[0])
+        return
+      }
+      
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
+router.post('/orderCertificate1RetakeID', async (req, res) => {
+  try {
+    let form = req.body.form
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('OrderID', sql.VarChar, form.OrderID)
+      .input('Certificate1', sql.VarChar, form.Certificate1)
+      .execute('orders_OrderCertificate1RetakeID')
 
       if (queryResult.recordset[0].code !== 200 ){
         errorResponse(res, queryResult.recordset[0])
