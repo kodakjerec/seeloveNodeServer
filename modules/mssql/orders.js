@@ -950,12 +950,14 @@ router.post('/anzaOrderUpdate', async (req, res) => {
     const pool = await poolPromise
     const queryResult = await pool.request()
       .input('AnzaOrderID', sql.VarChar, form.AnzaOrderID)
-      .input('OrderID', sql.VarChar, form.OrderID)
-      .input('CustomerID', sql.VarChar, form.CustomerID)  
-      .input('ScheduledDate', sql.Date, form.ScheduledDate)
-      .input('ExpirationDate', sql.Date, form.ExpirationDate)
-      .input('ModifyType', sql.NVarChar, form.ModifyType)
-      .input('userID', sql.VarChar, loginUser.userID)
+      .input('ProjectID', sql.VarChar, form.ProjectID)
+      .input('Seq', sql.TinyInt, form.Seq)
+      .input('ProductID', sql.VarChar, form.ProductID)
+      .input('Price', sql.Decimal, form.Price)     
+      .input('Qty', sql.SmallInt, form.Qty)
+      .input('FromStorageID', sql.VarChar, form.FromStorageID)
+      .input('ToStorageID', sql.VarChar, form.ToStorageID)
+      .input('Purpose', sql.VarChar, form.Purpose)
       .execute('orders_AnzaOrderUpdate')
 
       if (queryResult.recordset[0].code !== 200 ){
