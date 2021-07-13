@@ -403,6 +403,7 @@ router.post('/findStorageID', async (req, res) => {
       .input('Purpose', sql.VarChar, req.body.Purpose)
       .input('Qty', sql.Int, req.body.Qty)
       .input('StorageID', sql.VarChar, req.body.StorageID)
+      .input('StorageType', sql.VarChar, req.body.StorageType)
       .input('locale', sql.VarChar, req.headers['clientlocale'])
       .execute('stock_FindStorageID')
       
