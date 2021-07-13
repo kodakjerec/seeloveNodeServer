@@ -991,6 +991,23 @@ router.post('/anzaOrderShow2', async (req, res) => {
     res.send(err.message)
   }
 })
+router.post('/anzaChangeStorage', async (req, res) => {
+  try {
+    const pool = await poolPromise
+    const queryResult = await pool.request()
+      .input('AnzaOrderID', sql.VarChar, req.body.AnzaOrderID)
+      .input('ToStorageID', sql.VarChar, req.body.ToStorageID)
+      .input('userID', sql.VarChar, loginUser.userID)
+      .execute('orders_AnzaChangeStorage')
+
+    successResponse(req, res, { 
+      result: queryResult.recordset
+    })
+  } catch (err) {
+    res.status(500)
+    res.send(err.message)
+  }
+})
 
 // Order Installment
 router.post('/installmentDetailUpdate', async (req, res) => {
